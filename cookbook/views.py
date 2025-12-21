@@ -236,7 +236,8 @@ def add_comment(request, pk):
         else:
             messages.error(
                 request,
-                "Error adding comment. Please check your input."
+                "Error adding comment. "
+                "Please check your input."
             )
 
     return redirect("cookbook:recipe-detail", pk=pk)
