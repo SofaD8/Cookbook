@@ -11,69 +11,69 @@ class RecipeForm(forms.ModelForm):
     class Meta:
         model = Recipe
         fields = [
-            'title',
-            'description',
-            'category',
-            'ingredients',
-            'instructions',
-            'cooking_time',
-            'servings',
-            'image',
-            'tags'
+            "title",
+            "description",
+            "category",
+            "ingredients",
+            "instructions",
+            "cooking_time",
+            "servings",
+            "image",
+            "tags"
         ]
         widgets = {
-            'title': forms.TextInput(attrs={
-                'class': 'form-control',
-                'placeholder': 'Enter recipe title...'
+            "title": forms.TextInput(attrs={
+                "class": "form-control",
+                "placeholder": "Enter recipe title..."
             }),
-            'description': forms.Textarea(attrs={
-                'class': 'form-control',
-                'rows': 3,
-                'placeholder': 'Brief description of your dish...'
+            "description": forms.Textarea(attrs={
+                "class": "form-control",
+                "rows": 3,
+                "placeholder": "Brief description of your dish..."
             }),
-            'category': forms.Select(attrs={
-                'class': 'form-select'
+            "category": forms.Select(attrs={
+                "class": "form-select"
             }),
-            'ingredients': forms.Textarea(attrs={
-                'class': 'form-control',
-                'rows': 6,
-                'placeholder':
-                    'List ingredients (one per line):\n'
-                    '- 2 cups flour\n- 1 egg\n- ...'
+            "ingredients": forms.Textarea(attrs={
+                "class": "form-control",
+                "rows": 6,
+                "placeholder":
+                    "List ingredients (one per line):\n"
+                    "- 2 cups flour\n- 1 egg\n- ..."
             }),
-            'instructions': forms.Textarea(attrs={
-                'class': 'form-control',
-                'rows': 8,
-                'placeholder':
-                    '1. First step...\n2. Second step...\n...'
+            "instructions": forms.Textarea(attrs={
+                "class": "form-control",
+                "rows": 8,
+                "placeholder":
+                    "1. First step...\n2. Second step...\n..."
             }),
-            'cooking_time': forms.NumberInput(attrs={
-                'class': 'form-control',
-                'placeholder': 'Minutes',
-                'min': 1
+            "cooking_time": forms.NumberInput(attrs={
+                "class": "form-control",
+                "placeholder": "Minutes",
+                "min": 1
             }),
-            'servings': forms.NumberInput(attrs={
-                'class': 'form-control',
-                'placeholder': 'Number of servings',
-                'min': 1
+            "servings": forms.NumberInput(attrs={
+                "class": "form-control",
+                "placeholder": "Number of servings",
+                "min": 1
             }),
-            'image': forms.FileInput(attrs={
-                'class': 'form-control',
-                'accept': 'image/*'
+            "image": forms.FileInput(attrs={
+                "class": "form-control",
+                "accept": "image/*"
             }),
-            'tags': forms.CheckboxSelectMultiple(),
+            "tags": forms.CheckboxSelectMultiple(),
         }
         help_texts = {
-            'cooking_time': 'Total cooking time in minutes',
-            'servings': 'How many people does this recipe serve?',
-            'tags': 'Select all that apply',
+            "cooking_time": "Total cooking time in minutes",
+            "servings": "How many people does this recipe serve?",
+            "tags": "Select all that apply",
         }
 
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         if self.instance.pk:
-            self.fields['image'].required = False
+            self.fields["image"].required = False
 
 
 class CommentForm(forms.ModelForm):
@@ -82,20 +82,20 @@ class CommentForm(forms.ModelForm):
 
     class Meta:
         model = Comment
-        fields = ['content', 'rating']
+        fields = ["content", "rating"]
         widgets = {
-            'content': forms.Textarea(attrs={
-                'class': 'form-control',
-                'rows': 4,
-                'placeholder': 'Share your thoughts about this recipe...'
+            "content": forms.Textarea(attrs={
+                "class": "form-control",
+                "rows": 4,
+                "placeholder": "Share your thoughts about this recipe..."
             }),
-            'rating': forms.RadioSelect(
-                choices=[(i, f'{i} ⭐') for i in range(1, 6)]
+            "rating": forms.RadioSelect(
+                choices=[(i, f"{i} ⭐") for i in range(1, 6)]
             ),
         }
         labels = {
-            'content': 'Your Comment',
-            'rating': 'Rate this Recipe (optional)',
+            "content": "Your Comment",
+            "rating": "Rate this Recipe (optional)",
         }
 
 
@@ -105,20 +105,20 @@ class RecipeSearchForm(forms.Form):
         max_length=200,
         required=False,
         widget=forms.TextInput(attrs={
-            'class': 'form-control',
-            'placeholder': 'Search recipes...',
-            'aria-label': 'Search'
+            "class": "form-control",
+            "placeholder": "Search recipes...",
+            "aria-label": "Search"
         })
     )
     category = forms.ModelChoiceField(
         queryset=None,  # Will be set in __init__
         required=False,
-        empty_label='All Categories',
-        widget=forms.Select(attrs={'class': 'form-select'})
+        empty_label="All Categories",
+        widget=forms.Select(attrs={"class": "form-select"})
     )
 
     def __init__(self, *args, **kwargs):
         from .models import Category
 
         super().__init__(*args, **kwargs)
-        self.fields['category'].queryset = Category.objects.all()
+        self.fields["category"].queryset = Category.objects.all()

@@ -15,27 +15,27 @@ class User(AbstractUser):
         help_text="Tell us about yourself"
     )
     profile_image = models.ImageField(
-        upload_to='profiles/',
+        upload_to="profiles/",
         blank=True,
         null=True,
         help_text="Upload your profile picture"
     )
     favorite_recipes = models.ManyToManyField(
-        'Recipe',
-        related_name='favorited_by',
+        "Recipe",
+        related_name="favorited_by",
         blank=True
     )
 
     class Meta:
-        ordering = ['username']
+        ordering = ["username"]
 
     def __str__(self):
         return self.username
 
     def get_absolute_url(self):
         return reverse(
-            'cookbook:user-detail',
-            kwargs={'pk': self.pk}
+            "cookbook:user-detail",
+            kwargs={"pk": self.pk}
         )
 
 
@@ -53,15 +53,15 @@ class Category(models.Model):
 
     class Meta:
         verbose_name_plural = "categories"
-        ordering = ['name']
+        ordering = ["name"]
 
     def __str__(self):
         return self.name
 
     def get_absolute_url(self):
         return reverse(
-            'cookbook:category-detail',
-            kwargs={'pk': self.pk}
+            "cookbook:category-detail",
+            kwargs={"pk": self.pk}
         )
 
 
@@ -79,15 +79,15 @@ class Tag(models.Model):
     )
 
     class Meta:
-        ordering = ['name']
+        ordering = ["name"]
 
     def __str__(self):
         return self.name
 
     def get_absolute_url(self):
         return reverse(
-            'cookbook:tag-detail',
-            kwargs={'pk': self.pk}
+            "cookbook:tag-detail",
+            kwargs={"pk": self.pk}
         )
 
 
@@ -116,7 +116,7 @@ class Recipe(models.Model):
         validators=[MinValueValidator(1)]
     )
     image = models.ImageField(
-        upload_to='recipes/',
+        upload_to="recipes/",
         blank=True,
         null=True,
         help_text="Upload a photo of your dish"
@@ -124,19 +124,19 @@ class Recipe(models.Model):
     author = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
-        related_name='recipes',
+        related_name="recipes",
         help_text="Recipe author"
     )
     category = models.ForeignKey(
         Category,
         on_delete=models.SET_NULL,
         null=True,
-        related_name='recipes',
+        related_name="recipes",
         help_text="Recipe category"
     )
     tags = models.ManyToManyField(
         Tag,
-        related_name='recipes',
+        related_name="recipes",
         blank=True,
         help_text="Recipe tags"
     )
@@ -144,21 +144,21 @@ class Recipe(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
-        ordering = ['-created_at']
+        ordering = ["-created_at"]
 
     def __str__(self):
         return self.title
 
     def get_absolute_url(self):
         return reverse(
-            'cookbook:recipe-detail',
-            kwargs={'pk': self.pk}
+            "cookbook:recipe-detail",
+            kwargs={"pk": self.pk}
         )
 
     @property
     def average_rating(self):
         """Calculate average rating from comments"""
-        ratings = self.comments.exclude(rating__isnull=True).values_list('rating', flat=True)
+        ratings = self.comments.exclude(rating__isnull=True).values_list("rating", flat=True)
         if ratings:
             return round(sum(ratings) / len(ratings), 1)
         return None
@@ -169,13 +169,13 @@ class Comment(models.Model):
     recipe = models.ForeignKey(
         Recipe,
         on_delete=models.CASCADE,
-        related_name='comments',
+        related_name="comments",
         help_text="Recipe being commented on"
     )
     author = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
-        related_name='comments',
+        related_name="comments",
         help_text="Comment author"
     )
     content = models.TextField(
@@ -190,13 +190,13 @@ class Comment(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        ordering = ['-created_at']
+        ordering = ["-created_at"]
 
     def __str__(self):
         return f"Comment by {self.author.username} on {self.recipe.title}"
 
     def get_absolute_url(self):
         return reverse(
-            'cookbook:recipe-detail',
-            kwargs={'pk': self.recipe.pk}
+            "cookbook:recipe-detail",
+            kwargs={"pk": self.recipe.pk}
         )
