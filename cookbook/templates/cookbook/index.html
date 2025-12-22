@@ -1,0 +1,127 @@
+{% extends 'cookbook/base.html' %}
+
+{% block title %}Головна - CookBook Community{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero-section text-white text-center py-5" style="background: linear-gradient(135deg, #FF6B6B 0%, #FF8E53 100%);">
+    <div class="container">
+        <h1 class="display-3 fw-bold mb-3">
+            <i class="fas fa-utensils"></i> Ласкаво просимо до CookBook!
+        </h1>
+        <p class="lead mb-4">
+            Відкрийте для себе тисячі смачних рецептів або поділіться своїми власними!
+        </p>
+        {% if not user.is_authenticated %}
+            <a href="{% url 'signup' %}" class="btn btn-light btn-lg me-2">
+                <i class="fas fa-user-plus"></i> Приєднатися
+            </a>
+            <a href="{% url 'cookbook:recipe-list' %}" class="btn btn-outline-light btn-lg">
+                <i class="fas fa-search"></i> Переглянути рецепти
+            </a>
+        {% else %}
+            <a href="{% url 'cookbook:recipe-create' %}" class="btn btn-light btn-lg me-2">
+                <i class="fas fa-plus-circle"></i> Додати рецепт
+            </a>
+            <a href="{% url 'cookbook:recipe-list' %}" class="btn btn-outline-light btn-lg">
+                <i class="fas fa-book-open"></i> Всі рецепти
+            </a>
+        {% endif %}
+    </div>
+</section>
+
+<!-- Statistics -->
+<section class="py-4 bg-light">
+    <div class="container">
+        <div class="row text-center">
+            <div class="col-md-4 mb-3">
+                <div class="card border-0 shadow-sm h-100">
+                    <div class="card-body">
+                        <i class="fas fa-book fa-3x text-primary mb-3"></i>
+                        <h3 class="fw-bold">{{ total_recipes }}</h3>
+                        <p class="text-muted">Рецептів</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-3">
+                <div class="card border-0 shadow-sm h-100">
+                    <div class="card-body">
+                        <i class="fas fa-users fa-3x text-success mb-3"></i>
+                        <h3 class="fw-bold">{{ total_users }}</h3>
+                        <p class="text-muted">Користувачів</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-3">
+                <div class="card border-0 shadow-sm h-100">
+                    <div class="card-body">
+                        <i class="fas fa-heart fa-3x text-danger mb-3"></i>
+                        <h3 class="fw-bold">∞</h3>
+                        <p class="text-muted">Любові до кулінарії</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Recent Recipes -->
+<section class="py-5">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 class="fw-bold">
+                <i class="fas fa-clock text-primary"></i> Останні рецепти
+            </h2>
+            <a href="{% url 'cookbook:recipe-list' %}" class="btn btn-outline-primary">
+                Переглянути всі <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+        
+        <div class="row">
+            {% for recipe in recent_recipes %}
+                <div class="col-md-4 mb-4">
+                    {% include 'cookbook/includes/recipe_card.html' with recipe=recipe %}
+                </div>
+            {% empty %}
+                <div class="col-12">
+                    <div class="alert alert-info text-center">
+                        <i class="fas fa-info-circle"></i> Поки що немає рецептів. Будьте першим, хто поділиться!
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- Popular Recipes -->
+{% if popular_recipes %}
+<section class="py-5 bg-light">
+    <div class="container">
+        <h2 class="fw-bold mb-4">
+            <i class="fas fa-fire text-danger"></i> Популярні рецепти
+        </h2>
+        
+        <div class="row">
+            {% for recipe in popular_recipes %}
+                <div class="col-md-4 mb-4">
+                    {% include 'cookbook/includes/recipe_card.html' with recipe=recipe %}
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- Call to Action -->
+{% if not user.is_authenticated %}
+<section class="py-5 text-center" style="background: linear-gradient(135deg, #4ECDC4 0%, #44A08D 100%); color: white;">
+    <div class="container">
+        <h2 class="fw-bold mb-3">Готові приєднатися до нашої спільноти?</h2>
+        <p class="lead mb-4">Створіть обліковий запис і почніть ділитися своїми рецептами вже сьогодні!</p>
+        <a href="{% url 'cookbook:signup' %}" class="btn btn-light btn-lg">
+            <i class="fas fa-user-plus"></i> Зареєструватися безкоштовно
+        </a>
+    </div>
+</section>
+{% endif %}
+{% endblock %}
