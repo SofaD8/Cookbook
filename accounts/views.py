@@ -18,7 +18,7 @@ class SignUpView(generic.CreateView):
     def form_valid(self, form):
         messages.success(
             self.request, 
-            "Account created successfully! "
+            "Обліковий запис успішно створено! "
             "Please log in."
         )
         return super().form_valid(form) # noqa
@@ -57,7 +57,7 @@ def profile_update(request):
             form.save()
             messages.success(
                 request, 
-                "Profile updated successfully!"
+                "Профіль успішно оновлено!"
             )
             return redirect("profile")
     else:

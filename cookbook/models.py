@@ -1,6 +1,9 @@
+import cloudinary
 from cloudinary.models import CloudinaryField
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from django.db.models.signals import post_delete
+from django.dispatch import receiver
 from django.urls import reverse
 from django.core.validators import (
     MinValueValidator,
@@ -103,7 +106,7 @@ class Recipe(models.Model):
         help_text="Короткий опис страви"
     )
     ingredients = models.TextField(
-        help_text="Список інгрідієнтів (кожен з нової стрічки"
+        help_text="Список інгредієнтів (кожен з нової стрічки)"
     )
     instructions = models.TextField(
         help_text="Покрокова інструкція приготування"
@@ -203,3 +206,9 @@ class Comment(models.Model):
             "cookbook:recipe-detail",
             kwargs={"pk": self.recipe.pk}
         )
+
+
+@receiver(post_delete, sender=Recipe)
+def photo_delete(sender, instance, **kwargs):
+    if instance.image:
+        cloudinary.uploader.destroy(instance.image.public_id)

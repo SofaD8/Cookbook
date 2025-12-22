@@ -164,7 +164,7 @@ class RecipeCreateView(LoginRequiredMixin, generic.CreateView):
         form.instance.author = self.request.user
         messages.success(
             self.request,
-            "Recipe created successfully!"
+            "Рецепт успішно створено!"
         )
         return super().form_valid(form) # noqa
 
