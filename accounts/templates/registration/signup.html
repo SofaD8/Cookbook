@@ -20,7 +20,7 @@
                     </div>
                     
                     <!-- Registration Form -->
-                    <form method="post" action="{% url 'signup' %}">
+                    <form method="post" action="{% url 'accounts:signup' %}">
                         {% csrf_token %}
                         
                         <!-- Username -->
@@ -156,7 +156,7 @@
                     <div class="text-center">
                         <p class="text-muted mb-0">
                             Вже маєте акаунт?
-                            <a href="{% url 'login' %}" class="text-decoration-none fw-bold">
+                            <a href="{% url 'accounts:login' %}" class="text-decoration-none fw-bold">
                                 Увійти <i class="fas fa-arrow-right"></i>
                             </a>
                         </p>

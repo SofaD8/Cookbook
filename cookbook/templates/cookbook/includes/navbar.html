@@ -39,18 +39,18 @@
                         </a>
                         <ul class="dropdown-menu">
                             <li>
-                                <a class="dropdown-item" href="{% url 'profile' %}">
+                                <a class="dropdown-item" href="{% url 'accounts:profile' %}">
                                     <i class="fas fa-user"></i> Мій профіль
                                 </a>
                             </li>
                             <li>
-                                <a class="dropdown-item" href="{% url 'profile-update' %}">
+                                <a class="dropdown-item" href="{% url 'accounts:profile-update' %}">
                                     <i class="fas fa-edit"></i> Редагувати профіль
                                 </a>
                             </li>
                             <li><hr class="dropdown-divider"></li>
                             <li>
-                                <form method="post" action="{% url 'logout' %}">
+                                <form method="post" action="{% url 'accounts:logout' %}">
                                     {% csrf_token %}
                                     <button type="submit" class="dropdown-item">
                                         <i class="fas fa-sign-out-alt"></i> Вийти

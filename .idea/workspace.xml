@@ -5,11 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7427698e-c681-457d-9563-48ab14105e1b" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/cookbook_project.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/cookbook_project.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/accounts/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/accounts/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/accounts/templates/registration/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/accounts/templates/registration/login.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/accounts/templates/registration/signup.html" beforeDir="false" afterPath="$PROJECT_DIR$/accounts/templates/registration/signup.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cookbook/templates/cookbook/includes/navbar.html" beforeDir="false" afterPath="$PROJECT_DIR$/cookbook/templates/cookbook/includes/navbar.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cookbook/templates/cookbook/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/cookbook/templates/cookbook/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cookbook/templates/cookbook/profile_update.html" beforeDir="false" afterPath="$PROJECT_DIR$/cookbook/templates/cookbook/profile_update.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -64,6 +64,13 @@
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
+  <component name="RecapSpentCounter">
+    <option name="endsOfQuotaMs" value="1766955600000" />
+    <option name="spentUsd" value="0.0063795" />
+  </component>
+  <component name="RecapUselessUpdatesCounter">
+    <option name="suspendCountdown" value="9" />
+  </component>
   <component name="RunManager">
     <configuration default="true" type="Python.DjangoServer" factoryName="Django server">
       <module name="cookbook_project" />
@@ -138,7 +145,7 @@
       <workItem from="1766366201014" duration="337000" />
       <workItem from="1766366679942" duration="1790000" />
       <workItem from="1766368522288" duration="572000" />
-      <workItem from="1766369144734" duration="1764000" />
+      <workItem from="1766369144734" duration="3348000" />
     </task>
     <servers />
   </component>

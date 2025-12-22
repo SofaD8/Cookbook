@@ -29,7 +29,7 @@
                         <p class="mb-0 small"><i class="fas fa-calendar"></i> Приєднався {{ profile_user.date_joined|date:"F Y" }}</p>
                     </div>
                     <div class="col-md-3 text-md-end mt-3 mt-md-0">
-                        <a href="{% url 'profile-update' %}" class="btn btn-light">
+                        <a href="{% url 'accounts:profile-update' %}" class="btn btn-light">
                             <i class="fas fa-edit"></i> Редагувати профіль
                         </a>
                     </div>
