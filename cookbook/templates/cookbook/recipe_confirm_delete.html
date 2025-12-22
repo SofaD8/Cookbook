@@ -1,0 +1,41 @@
+{% extends 'cookbook/base.html' %}
+
+{% block title %}Видалити рецепт - CookBook{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-lg border-danger">
+                <div class="card-header bg-danger text-white text-center">
+                    <h3><i class="fas fa-exclamation-triangle"></i> Підтвердження видалення</h3>
+                </div>
+                <div class="card-body p-4">
+                    <p class="text-center mb-4">
+                        Ви впевнені, що хочете видалити рецепт 
+                        <strong>"{{ recipe.title }}"</strong>?
+                    </p>
+                    
+                    <div class="alert alert-warning">
+                        <i class="fas fa-info-circle"></i>
+                        <strong>Увага!</strong> Ця дія незворотна. Всі коментарі та оцінки також будуть видалені.
+                    </div>
+                    
+                    <form method="post" class="mt-4">
+                        {% csrf_token %}
+                        <div class="d-flex gap-2 justify-content-center">
+                            <a href="{% url 'cookbook:recipe-detail' recipe.pk %}" 
+                               class="btn btn-secondary btn-lg">
+                                <i class="fas fa-times"></i> Скасувати
+                            </a>
+                            <button type="submit" class="btn btn-danger btn-lg">
+                                <i class="fas fa-trash"></i> Так, видалити
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

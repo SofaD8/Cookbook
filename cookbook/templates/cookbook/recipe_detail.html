@@ -1,0 +1,278 @@
+{% extends 'cookbook/base.html' %}
+
+{% block title %}{{ recipe.title }} - CookBook{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <!-- Breadcrumb -->
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'cookbook:index' %}">Головна</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'cookbook:recipe-list' %}">Рецепти</a></li>
+            <li class="breadcrumb-item active">{{ recipe.title }}</li>
+        </ol>
+    </nav>
+    
+    <div class="row">
+        <!-- Main Content -->
+        <div class="col-lg-8">
+            <!-- Recipe Header -->
+            <div class="card mb-4">
+                <!-- Recipe Image -->
+                {% if recipe.image %}
+                    <img src="{{ recipe.image.url }}" 
+                         class="card-img-top" 
+                         alt="{{ recipe.title }}"
+                         style="max-height: 400px; object-fit: cover;">
+                {% else %}
+                    <div class="card-img-top bg-gradient d-flex align-items-center justify-content-center" 
+                         style="height: 400px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                        <i class="fas fa-utensils fa-5x text-white"></i>
+                    </div>
+                {% endif %}
+                
+                <div class="card-body">
+                    <!-- Title and Category -->
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                        <div>
+                            <h1 class="card-title fw-bold mb-2">{{ recipe.title }}</h1>
+                            {% if recipe.category %}
+                                <a href="{% url 'cookbook:category-detail' recipe.category.pk %}" 
+                                   class="badge bg-primary text-decoration-none">
+                                    <i class="fas fa-list"></i> {{ recipe.category.name }}
+                                </a>
+                            {% endif %}
+                        </div>
+                        
+                        <!-- Favorite Button -->
+                        {% if user.is_authenticated %}
+                            <form method="post" action="{% url 'cookbook:toggle-favorite' recipe.pk %}">
+                                {% csrf_token %}
+                                <button type="submit" class="btn {% if is_favorite %}btn-danger{% else %}btn-outline-danger{% endif %}">
+                                    {% if is_favorite %}
+                                        <i class="fas fa-heart"></i> В улюблених
+                                    {% else %}
+                                        <i class="far fa-heart"></i> До улюблених
+                                    {% endif %}
+                                </button>
+                            </form>
+                        {% endif %}
+                    </div>
+                    
+                    <!-- Author and Date -->
+                    <div class="d-flex align-items-center mb-3">
+                        <i class="fas fa-user-circle fa-2x text-primary me-2"></i>
+                        <div>
+                            <a href="{% url 'cookbook:user-detail' recipe.author.pk %}" 
+                               class="text-decoration-none fw-bold">
+                                {{ recipe.author.username }}
+                            </a>
+                            <br>
+                            <small class="text-muted">
+                                <i class="fas fa-calendar"></i> {{ recipe.created_at|date:"d.m.Y" }}
+                            </small>
+                        </div>
+                    </div>
+                    
+                    <!-- Rating -->
+                    {% if recipe.average_rating %}
+                        <div class="mb-3">
+                            <span class="text-warning fs-5">
+                                {% for i in "12345" %}
+                                    {% if forloop.counter <= recipe.average_rating %}
+                                        <i class="fas fa-star"></i>
+                                    {% else %}
+                                        <i class="far fa-star"></i>
+                                    {% endif %}
+                                {% endfor %}
+                            </span>
+                            <span class="ms-2 fw-bold">{{ recipe.average_rating }}/5</span>
+                            <small class="text-muted">({{ recipe.comments.count }} відгуків)</small>
+                        </div>
+                    {% endif %}
+                    
+                    <!-- Quick Info -->
+                    <div class="row text-center bg-light rounded p-3 mb-3">
+                        <div class="col-4">
+                            <i class="fas fa-clock fa-2x text-primary mb-2"></i>
+                            <p class="mb-0 fw-bold">{{ recipe.cooking_time }} хв</p>
+                            <small class="text-muted">Час приготування</small>
+                        </div>
+                        <div class="col-4">
+                            <i class="fas fa-users fa-2x text-success mb-2"></i>
+                            <p class="mb-0 fw-bold">{{ recipe.servings }}</p>
+                            <small class="text-muted">Порцій</small>
+                        </div>
+                        <div class="col-4">
+                            <i class="fas fa-comments fa-2x text-info mb-2"></i>
+                            <p class="mb-0 fw-bold">{{ recipe.comments.count }}</p>
+                            <small class="text-muted">Коментарів</small>
+                        </div>
+                    </div>
+                    
+                    <!-- Description -->
+                    <div class="mb-4">
+                        <h5 class="fw-bold"><i class="fas fa-info-circle"></i> Опис</h5>
+                        <p class="text-muted">{{ recipe.description }}</p>
+                    </div>
+                    
+                    <!-- Tags -->
+                    {% if recipe.tags.all %}
+                        <div class="mb-3">
+                            <h6 class="fw-bold"><i class="fas fa-tags"></i> Теги:</h6>
+                            {% for tag in recipe.tags.all %}
+                                <a href="{% url 'cookbook:tag-detail' tag.pk %}" 
+                                   class="badge bg-light text-dark border text-decoration-none me-1">
+                                    {{ tag.name }}
+                                </a>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                    
+                    <!-- Edit/Delete Buttons (only for author) -->
+                    {% if is_author %}
+                        <hr>
+                        <div class="d-flex gap-2">
+                            <a href="{% url 'cookbook:recipe-update' recipe.pk %}" 
+                               class="btn btn-warning">
+                                <i class="fas fa-edit"></i> Редагувати
+                            </a>
+                            <a href="{% url 'cookbook:recipe-delete' recipe.pk %}" 
+                               class="btn btn-danger">
+                                <i class="fas fa-trash"></i> Видалити
+                            </a>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+            
+            <!-- Ingredients -->
+            <div class="card mb-4">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0"><i class="fas fa-shopping-basket"></i> Інгредієнти</h5>
+                </div>
+                <div class="card-body">
+                    <pre style="white-space: pre-wrap; font-family: inherit;">{{ recipe.ingredients }}</pre>
+                </div>
+            </div>
+            
+            <!-- Instructions -->
+            <div class="card mb-4">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0"><i class="fas fa-list-ol"></i> Інструкції</h5>
+                </div>
+                <div class="card-body">
+                    <pre style="white-space: pre-wrap; font-family: inherit;">{{ recipe.instructions }}</pre>
+                </div>
+            </div>
+            
+            <!-- Comments Section -->
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">
+                        <i class="fas fa-comments"></i> Коментарі ({{ comments.count }})
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <!-- Add Comment Form -->
+                    {% if user.is_authenticated %}
+                        {% include 'cookbook/includes/comment_form.html' %}
+                    {% else %}
+                        <div class="alert alert-info">
+                            <i class="fas fa-info-circle"></i> 
+                            <a href="{% url 'login' %}">Увійдіть</a> або 
+                            <a href="{% url 'signup' %}">зареєструйтесь</a>, 
+                            щоб залишити коментар
+                        </div>
+                    {% endif %}
+                    
+                    <hr>
+                    
+                    <!-- Comments List -->
+                    {% if comments %}
+                        {% for comment in comments %}
+                            <div class="d-flex mb-3 {% if not forloop.last %}border-bottom pb-3{% endif %}">
+                                <div class="flex-shrink-0">
+                                    <i class="fas fa-user-circle fa-3x text-secondary"></i>
+                                </div>
+                                <div class="flex-grow-1 ms-3">
+                                    <div class="d-flex justify-content-between">
+                                        <h6 class="mb-1">
+                                            <a href="{% url 'cookbook:user-detail' comment.author.pk %}" 
+                                               class="text-decoration-none">
+                                                {{ comment.author.username }}
+                                            </a>
+                                            {% if comment.rating %}
+                                                <span class="text-warning ms-2">
+                                                    {% for i in "12345" %}
+                                                        {% if forloop.counter <= comment.rating %}
+                                                            <i class="fas fa-star"></i>
+                                                        {% else %}
+                                                            <i class="far fa-star"></i>
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                </span>
+                                            {% endif %}
+                                        </h6>
+                                        <small class="text-muted">
+                                            <i class="fas fa-clock"></i> {{ comment.created_at|date:"d.m.Y H:i" }}
+                                        </small>
+                                    </div>
+                                    <p class="mb-0 text-muted">{{ comment.content }}</p>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <p class="text-muted text-center">
+                            <i class="fas fa-comment-slash"></i> Коментарів поки немає. Будьте першим!
+                        </p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        
+        <!-- Sidebar -->
+        <div class="col-lg-4">
+            <!-- Related Recipes -->
+            {% if related_recipes %}
+                <div class="card mb-4">
+                    <div class="card-header bg-info text-white">
+                        <h5 class="mb-0"><i class="fas fa-lightbulb"></i> Схожі рецепти</h5>
+                    </div>
+                    <div class="list-group list-group-flush">
+                        {% for related in related_recipes %}
+                            <a href="{% url 'cookbook:recipe-detail' related.pk %}" 
+                               class="list-group-item list-group-item-action">
+                                <div class="d-flex w-100 justify-content-between">
+                                    <h6 class="mb-1">{{ related.title|truncatewords:4 }}</h6>
+                                    <small class="text-muted">
+                                        <i class="fas fa-clock"></i> {{ related.cooking_time }} хв
+                                    </small>
+                                </div>
+                                <small class="text-muted">
+                                    <i class="fas fa-user"></i> {{ related.author.username }}
+                                </small>
+                            </a>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endif %}
+            
+            <!-- Share Card -->
+            <div class="card">
+                <div class="card-header bg-secondary text-white">
+                    <h5 class="mb-0"><i class="fas fa-share-alt"></i> Поділитися</h5>
+                </div>
+                <div class="card-body text-center">
+                    <p class="text-muted">Сподобався рецепт? Поділіться з друзями!</p>
+                    <div class="d-grid gap-2">
+                        <button class="btn btn-primary" onclick="navigator.clipboard.writeText(window.location.href)">
+                            <i class="fas fa-link"></i> Копіювати посилання
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
