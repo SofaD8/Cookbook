@@ -179,13 +179,12 @@ class RecipeUpdateView(
     template_name = "cookbook/recipe_form.html"
 
     def test_func(self):
-        recipe = self.get_object()
-        return self.request.user == recipe.author
+        return self.request.user == self.get_object().author
 
     def form_valid(self, form):
         messages.success(
             self.request,
-            "Recipe updated successfully!"
+            "Рецепт оновлено!"
         )
         return super().form_valid(form) # noqa
 
@@ -201,13 +200,12 @@ class RecipeDeleteView(
     success_url = reverse_lazy("cookbook:recipe-list")
 
     def test_func(self):
-        recipe = self.get_object()
-        return self.request.user == recipe.author
+        return self.request.user == self.get_object().author
 
     def delete(self, request, *args, **kwargs):
         messages.success(
             request,
-            "Recipe deleted successfully!")
+            "Рецепт видалено!")
         return super().delete(
             request,
             *args,
@@ -231,13 +229,13 @@ def add_comment(request, pk):
             comment.save()
             messages.success(
                 request,
-                "Comment added successfully!"
+                "Ви додали коментар!"
             )
         else:
             messages.error(
                 request,
-                "Error adding comment. "
-                "Please check your input."
+                "Помилка додавання коментаря."
+                "Будь ласка, перевірте введені дані."
             )
 
     return redirect("cookbook:recipe-detail", pk=pk)
@@ -253,10 +251,10 @@ def toggle_favorite(request, pk):
 
     if recipe in user.favorite_recipes.all():
         user.favorite_recipes.remove(recipe)
-        messages.info(request, "Recipe removed from favorites.")
+        messages.info(request, "Видалено з улюблених.")
     else:
         user.favorite_recipes.add(recipe)
-        messages.success(request, "Recipe added to favorites!")
+        messages.success(request, "Додано в улюблені!")
 
     return HttpResponseRedirect(request.META.get("HTTP_REFERER", "/"))
 
@@ -283,8 +281,7 @@ class CategoryDetailView(generic.DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        category = self.get_object()
-        context["recipes"] = (category.recipes
+        context["recipes"] = (self.get_object().recipes
                               .select_related("author")
                               .all()
                               )
@@ -328,3 +325,14 @@ class UserDetailView(generic.DetailView):
     model = User
     template_name = "cookbook/user_detail.html"
     context_object_name = "profile_user"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        user = self.get_object()
+        context.update({
+            "user_recipes": user.recipes.all(),
+            "total_recipes": user.recipes.count(),
+            "favorite_recipes": user.favorite_recipes.all(),
+            "total_comments": Comment.objects.filter(author=user).count(),
+        })
+        return context
