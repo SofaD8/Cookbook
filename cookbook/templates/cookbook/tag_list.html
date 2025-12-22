@@ -1,0 +1,32 @@
+{% extends 'cookbook/base.html' %}
+
+{% block title %}Теги - CookBook{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <div class="container">
+        <h1 class="display-4 fw-bold">
+            <i class="fas fa-tags"></i> Теги рецептів
+        </h1>
+        <p class="lead">Фільтруйте рецепти за тегами</p>
+    </div>
+</div>
+
+<div class="container py-4">
+    {% if tags %}
+        <div class="d-flex flex-wrap gap-2 justify-content-center">
+            {% for tag in tags %}
+                <a href="{% url 'cookbook:tag-detail' tag.pk %}" 
+                   class="btn btn-outline-primary btn-lg text-decoration-none">
+                    <i class="fas fa-tag"></i> {{ tag.name }}
+                    <span class="badge bg-primary">{{ tag.recipe_count }}</span>
+                </a>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="alert alert-info text-center">
+            <i class="fas fa-info-circle"></i> Теги поки не додані
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

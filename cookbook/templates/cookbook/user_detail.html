@@ -1,0 +1,100 @@
+{% extends 'cookbook/base.html' %}
+
+{% block title %}{{ profile_user.username }} - CookBook{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <!-- Profile Header -->
+    <div class="card mb-4">
+        <div class="card-body">
+            <div class="row align-items-center">
+                <div class="col-md-2 text-center">
+                    {% if profile_user.profile_image %}
+                        <img src="{{ profile_user.profile_image.url }}" 
+                             alt="{{ profile_user.username }}"
+                             class="rounded-circle img-thumbnail"
+                             style="width: 120px; height: 120px; object-fit: cover;">
+                    {% else %}
+                        <i class="fas fa-user-circle fa-8x text-secondary"></i>
+                    {% endif %}
+                </div>
+                <div class="col-md-7">
+                    <h2 class="fw-bold mb-1">{{ profile_user.username }}</h2>
+                    {% if profile_user.get_full_name %}
+                        <p class="text-muted mb-2">{{ profile_user.get_full_name }}</p>
+                    {% endif %}
+                    {% if profile_user.bio %}
+                        <p class="mb-2">{{ profile_user.bio }}</p>
+                    {% endif %}
+                    <small class="text-muted">
+                        <i class="fas fa-calendar"></i> 
+                        Приєднався {{ profile_user.date_joined|date:"F Y" }}
+                    </small>
+                </div>
+                <div class="col-md-3 text-end">
+                    {% if user == profile_user %}
+                        <a href="{% url 'cookbook:profile-update' %}" 
+                           class="btn btn-primary">
+                            <i class="fas fa-edit"></i> Редагувати профіль
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Stats -->
+    <div class="row mb-4">
+        <div class="col-md-4">
+            <div class="card text-center">
+                <div class="card-body">
+                    <i class="fas fa-book fa-3x text-primary mb-2"></i>
+                    <h3 class="fw-bold">{{ total_recipes }}</h3>
+                    <p class="text-muted mb-0">Рецептів</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-center">
+                <div class="card-body">
+                    <i class="fas fa-heart fa-3x text-danger mb-2"></i>
+                    <h3 class="fw-bold">{{ favorite_recipes.count }}</h3>
+                    <p class="text-muted mb-0">Улюблених</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-center">
+                <div class="card-body">
+                    <i class="fas fa-comments fa-3x text-success mb-2"></i>
+                    <h3 class="fw-bold">{{ total_comments }}</h3>
+                    <p class="text-muted mb-0">Коментарів</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- User's Recipes -->
+    <h3 class="fw-bold mb-3">
+        <i class="fas fa-book-open"></i> Рецепти користувача
+    </h3>
+    {% if user_recipes %}
+        <div class="row">
+            {% for recipe in user_recipes %}
+                <div class="col-md-4 mb-4">
+                    {% include 'cookbook/includes/recipe_card.html' with recipe=recipe %}
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="alert alert-info">
+            <i class="fas fa-info-circle"></i> 
+            {% if user == profile_user %}
+                Ви ще не створили жодного рецепту
+            {% else %}
+                Користувач ще не створив жодного рецепту
+            {% endif %}
+        </div>
+    {% endif %}
+</div>
+{% endblock %}
