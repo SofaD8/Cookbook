@@ -5,9 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7427698e-c681-457d-9563-48ab14105e1b" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.env" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/accounts/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/accounts/forms.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cookbook/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/cookbook/models.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cookbook_project/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/cookbook_project/settings.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
     </list>
@@ -66,10 +67,10 @@
 }</component>
   <component name="RecapSpentCounter">
     <option name="endsOfQuotaMs" value="1768294808959" />
-    <option name="spentUsd" value="0.060507104" />
+    <option name="spentUsd" value="0.066676356" />
   </component>
   <component name="RecapUselessUpdatesCounter">
-    <option name="suspendCountdown" value="3" />
+    <option name="suspendCountdown" value="2" />
   </component>
   <component name="RunManager">
     <configuration default="true" type="Python.DjangoServer" factoryName="Django server">
@@ -149,7 +150,7 @@
       <workItem from="1766394830000" duration="315000" />
       <workItem from="1766395550870" duration="633000" />
       <workItem from="1766399157442" duration="38000" />
-      <workItem from="1766399207087" duration="6967000" />
+      <workItem from="1766399207087" duration="11361000" />
     </task>
     <servers />
   </component>

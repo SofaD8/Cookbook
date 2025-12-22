@@ -1,6 +1,10 @@
+import os
 from pathlib import Path
 
-import os
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
+
 from dotenv import load_dotenv
 
 
@@ -23,6 +27,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "cloudinary",
     "cookbook",
     "accounts",
 ]
@@ -98,3 +103,10 @@ AUTH_USER_MODEL = "cookbook.User"
 
 
 STATIC_URL = "static/"
+
+
+cloudinary.config(
+    cloud_name=os.getenv("CLOUD_NAME"),
+    api_key=os.getenv("API_KEY"),
+    api_secret=os.getenv("API_SECRET"),
+)
