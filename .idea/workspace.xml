@@ -6,7 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="7427698e-c681-457d-9563-48ab14105e1b" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cookbook/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/cookbook/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cookbook_project/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/cookbook_project/settings.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -146,7 +146,7 @@
       <workItem from="1766394830000" duration="315000" />
       <workItem from="1766395550870" duration="633000" />
       <workItem from="1766399157442" duration="38000" />
-      <workItem from="1766399207087" duration="23275000" />
+      <workItem from="1766399207087" duration="24402000" />
     </task>
     <servers />
   </component>

@@ -4,6 +4,7 @@ from pathlib import Path
 import cloudinary
 import cloudinary.uploader
 import cloudinary.api
+from django.contrib.messages import constants as messages
 
 from dotenv import load_dotenv
 
@@ -26,6 +27,7 @@ INSTALLED_APPS = [
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
+    "cloudinary_storage",
     "django.contrib.staticfiles",
     "cloudinary",
     "cookbook",
@@ -112,3 +114,13 @@ cloudinary.config(
 )
 
 DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
+
+
+LOGIN_REDIRECT_URL = "cookbook:index"
+LOGOUT_REDIRECT_URL = "cookbook:index"
+LOGIN_URL = "accounts:login"
+
+
+MESSAGE_TAGS = {
+    messages.ERROR: 'danger',
+}
