@@ -20,7 +20,7 @@ class SignUpForm(UserCreationForm):
         required=False,
         widget=forms.TextInput(attrs={
             "class": "form-control",
-            "placeholder": "First Name"
+            "placeholder": "Ім'я"
         })
     )
     last_name = forms.CharField(
@@ -28,7 +28,7 @@ class SignUpForm(UserCreationForm):
         required=False,
         widget=forms.TextInput(attrs={
             "class": "form-control",
-            "placeholder": "Last Name"
+            "placeholder": "Прізвище"
         })
     )
 
@@ -75,7 +75,7 @@ class UserUpdateForm(forms.ModelForm):
             "bio": forms.Textarea(attrs={
                 "class": "form-control",
                 "rows": 4,
-                "placeholder": "Tell us about yourself..."
+                "placeholder": "Розкажіть іншим про себе..."
             }),
             "profile_image": forms.FileInput(attrs={"class": "form-control"}),
         }
