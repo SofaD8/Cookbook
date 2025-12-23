@@ -122,7 +122,7 @@ class Recipe(models.Model):
     )
     image = CloudinaryField(
         "image",
-        folder="recipes/",
+        folder="test_folder",
         blank=True,
         null=True,
         help_text="Додайте світлину страви"

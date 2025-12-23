@@ -122,5 +122,5 @@ LOGIN_URL = "accounts:login"
 
 
 MESSAGE_TAGS = {
-    messages.ERROR: 'danger',
+    messages.ERROR: "danger",
 }

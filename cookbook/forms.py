@@ -89,9 +89,8 @@ class CommentForm(forms.ModelForm):
                 "rows": 4,
                 "placeholder": "Поділіться своєю думкою про рецепт..."
             }),
-            "rating": forms.RadioSelect(
-                choices=[(i, f"{i} ⭐") for i in range(1, 6)]
-            ),
+                "rating": forms.RadioSelect(
+                choices=[(i, i) for i in range(1, 6)]),
         }
         labels = {
             "content": "Ваш коментар",

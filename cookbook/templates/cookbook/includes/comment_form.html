@@ -7,26 +7,19 @@
             <div class="mb-3">
                 <label class="form-label small fw-bold text-uppercase">{{ comment_form.content.label }}</label>
                 {{ comment_form.content }}
-                {% if comment_form.content.errors %}
-                    <div class="text-danger small">{{ comment_form.content.errors }}</div>
-                {% endif %}
             </div>
 
             <div class="mb-3">
                 <label class="form-label small fw-bold text-uppercase">Ваша оцінка</label>
-                <div class="d-flex gap-2 rating-stars">
-                    {% for value, label in comment_form.rating.field.choices %}
-                        <div class="form-check form-check-inline m-0 p-0">
-                            <input class="btn-check" type="radio" name="rating" id="rating_{{ value }}" value="{{ value }}" required>
-                            <label class="btn btn-outline-warning rounded-pill px-3" for="rating_{{ value }}">
-                                {{ value }} <i class="fas fa-star"></i>
-                            </label>
-                        </div>
-                    {% endfor %}
+                <div class="rating-stars-container">
+                    <div class="rating-stars">
+                        {% for radio in comment_form.rating %}
+                          {{ radio.tag }} <label for="{{ radio.id_for_label }}">
+                          ★ <i class="fas fa-star"></i>
+                          </label>
+                        {% endfor %}
+                    </div>
                 </div>
-                {% if comment_form.rating.errors %}
-                    <div class="text-danger small">{{ comment_form.rating.errors }}</div>
-                {% endif %}
             </div>
 
             <button type="submit" class="btn btn-primary">

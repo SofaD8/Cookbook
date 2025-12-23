@@ -59,7 +59,7 @@ def profile_update(request):
                 request, 
                 "Профіль успішно оновлено!"
             )
-            return redirect("profile")
+            return redirect("cookbook:user-detail", pk=request.user.pk)
     else:
         form = UserUpdateForm(instance=request.user)
 
