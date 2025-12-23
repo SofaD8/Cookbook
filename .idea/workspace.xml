@@ -5,14 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7427698e-c681-457d-9563-48ab14105e1b" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/accounts/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/accounts/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cookbook/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/cookbook/forms.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cookbook/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/cookbook/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cookbook/templates/cookbook/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/cookbook/templates/cookbook/base.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cookbook/templates/cookbook/includes/comment_form.html" beforeDir="false" afterPath="$PROJECT_DIR$/cookbook/templates/cookbook/includes/comment_form.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cookbook_project/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/cookbook_project/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/accounts/tests.py" beforeDir="false" afterPath="$PROJECT_DIR$/accounts/tests.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cookbook/tests.py" beforeDir="false" afterPath="$PROJECT_DIR$/cookbook/tests.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -69,10 +65,10 @@
 }</component>
   <component name="RecapSpentCounter">
     <option name="endsOfQuotaMs" value="1768294808959" />
-    <option name="spentUsd" value="0.16363001" />
+    <option name="spentUsd" value="0.19253674" />
   </component>
   <component name="RecapUselessUpdatesCounter">
-    <option name="suspendCountdown" value="4" />
+    <option name="suspendCountdown" value="3" />
   </component>
   <component name="RunManager">
     <configuration default="true" type="Python.DjangoServer" factoryName="Django server">
@@ -153,7 +149,7 @@
       <workItem from="1766395550870" duration="633000" />
       <workItem from="1766399157442" duration="38000" />
       <workItem from="1766399207087" duration="25879000" />
-      <workItem from="1766444942835" duration="6133000" />
+      <workItem from="1766444942835" duration="7860000" />
     </task>
     <servers />
   </component>

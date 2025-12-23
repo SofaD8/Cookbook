@@ -1,12 +1,10 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm
 
-from .models import User, Recipe, Comment
+from .models import Recipe, Comment
 
 
 class RecipeForm(forms.ModelForm):
     """Recipe creation and update form"""
-
 
     class Meta:
         model = Recipe
@@ -69,7 +67,6 @@ class RecipeForm(forms.ModelForm):
             "tags": "Виберіть усе, що підходить",
         }
 
-
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         if self.instance.pk:
@@ -78,7 +75,6 @@ class RecipeForm(forms.ModelForm):
 
 class CommentForm(forms.ModelForm):
     """Comment form for recipes"""
-
 
     class Meta:
         model = Comment

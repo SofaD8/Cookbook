@@ -91,7 +91,6 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
-
 LANGUAGE_CODE = "uk-ua"
 
 TIME_ZONE = "Europe/Kyiv"
