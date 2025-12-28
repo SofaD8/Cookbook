@@ -1,14 +1,13 @@
 import os
 import django
 
-
+# 1. Налаштовуємо оточення
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'cookbook_project.settings.prod')
-
-
 django.setup()
 
-
-from django.contrib.auth.models import User
+# 2. Правильний спосіб імпорту моделі користувача (підтримує кастомні моделі)
+from django.contrib.auth import get_user_model
+User = get_user_model()
 
 def fix_admin():
     username = os.getenv('DJANGO_SUPERUSER_USERNAME', 'Sofa')
@@ -16,10 +15,13 @@ def fix_admin():
     email = os.getenv('DJANGO_SUPERUSER_EMAIL', 'admin@example.com')
 
     if not password:
-        print("ERROR: DJANGO_SUPERUSER_PASSWORD is not set in Render Environment")
+        print("ERROR: DJANGO_SUPERUSER_PASSWORD is not set")
         return
 
-    if User.objects.filter(username=username).exists():
+    # Шукаємо користувача за username
+    user_exists = User.objects.filter(username=username).exists()
+
+    if user_exists:
         user = User.objects.get(username=username)
         user.set_password(password)
         user.save()
