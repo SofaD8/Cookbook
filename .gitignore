@@ -1,2 +1,24 @@
-.idea
-.venv
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+ENV/
+env/
+
+# IDEs (PyCharm, VS Code)
+.idea/
+.vscode/
+*.swp
+*.iml
+
+# Django
+db.sqlite3
+media/
+staticfiles/
+.env
+
+# OS
+.DS_Store
+Thumbs.db
