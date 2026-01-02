@@ -5,9 +5,13 @@ from . import views
 
 app_name = "cookbook"
 
+
 urlpatterns = [
-    # Homepage
-    path("", views.index, name="index"),
+    path(
+        "",
+        views.IndexView.as_view(),
+        name="index"
+    ),
 
     # Recipe URLs
     path(
@@ -36,21 +40,18 @@ urlpatterns = [
         name="recipe-delete"
     ),
 
-    # Comment URLs
     path(
         "recipe/<int:pk>/comment/",
-        views.add_comment,
+        views.CommentCreateView.as_view(),
         name="add-comment"
     ),
 
-    # Favorite URLs
     path(
         "recipe/<int:pk>/favorite/",
-        views.toggle_favorite,
+        views.FavoriteToggleView.as_view(),
         name="toggle-favorite"
     ),
 
-    # Category URLs
     path(
         "categories/",
         views.CategoryListView.as_view(),
@@ -62,7 +63,6 @@ urlpatterns = [
         name="category-detail"
     ),
 
-    # Tag URLs
     path(
         "tags/",
         views.TagListView.as_view(),
@@ -74,7 +74,6 @@ urlpatterns = [
         name="tag-detail"
     ),
 
-    # User Profile URLs
     path(
         "user/<int:pk>/",
         views.UserDetailView.as_view(),

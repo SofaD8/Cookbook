@@ -9,7 +9,7 @@ from django.contrib.auth.mixins import (
     UserPassesTestMixin
 )
 from django.contrib import messages
-from django.views import generic
+from django.views import generic, View
 from django.urls import reverse_lazy
 from django.db.models import Q, Count, Avg
 from django.http import HttpResponseRedirect
@@ -28,27 +28,22 @@ from .forms import (
 )
 
 
-def index(request):
+class IndexView(generic.TemplateView):
     """Homepage with featured recipes"""
-    recent_recipes = Recipe.objects.select_related(
-        "author", "category"
-    ).prefetch_related("tags").order_by("-created_at")[:6]
+    template_name = "cookbook/index.html"
 
-    popular_recipes = Recipe.objects.annotate(
-        comment_count=Count("comments")
-    ).order_by("-comment_count")[:3]
-
-    context = {
-        "recent_recipes": recent_recipes,
-        "popular_recipes": popular_recipes,
-        "total_recipes": Recipe.objects.count(),
-        "total_users": User.objects.count(),
-    }
-    return render(
-        request,
-        "cookbook/index.html",
-        context
-    )
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context.update({
+            "recent_recipes": Recipe.objects.select_related("author", "category")
+                                     .prefetch_related("tags")
+                                     .order_by("-created_at")[:6],
+            "popular_recipes": Recipe.objects.annotate(comment_count=Count("comments"))
+                                      .order_by("-comment_count")[:3],
+            "total_recipes": Recipe.objects.count(),
+            "total_users": User.objects.count(),
+        })
+        return context
 
 
 class RecipeListView(generic.ListView):
@@ -144,7 +139,7 @@ class RecipeDetailView(generic.DetailView):
 
 
 class RecipeCreateView(LoginRequiredMixin, generic.CreateView):
-    """Create new recipe"""
+    """Create a new recipe"""
     model = Recipe
     form_class = RecipeForm
     template_name = "cookbook/recipe_form.html"
@@ -153,7 +148,7 @@ class RecipeCreateView(LoginRequiredMixin, generic.CreateView):
         form.instance.author = self.request.user
         messages.success(
             self.request,
-            "Recipt created successfully!"
+            "Recipe created successfully!"
         )
         return super().form_valid(form) # noqa
 
@@ -162,7 +157,7 @@ class RecipeUpdateView(
     LoginRequiredMixin,
     UserPassesTestMixin,
     generic.UpdateView):
-    """Update existing recipe (only author can edit)"""
+    """Update the existing recipe (only author can edit)"""
     model = Recipe
     form_class = RecipeForm
     template_name = "cookbook/recipe_form.html"
@@ -173,7 +168,7 @@ class RecipeUpdateView(
     def form_valid(self, form):
         messages.success(
             self.request,
-            "Recipt updated successfully!"
+            "Recipe updated successfully!"
         )
         return super().form_valid(form) # noqa
 
@@ -183,7 +178,7 @@ class RecipeDeleteView(
     UserPassesTestMixin,
     generic.DeleteView
 ):
-    """Delete recipe (only author can delete)"""
+    """Delete a recipe (only author can delete)"""
     model = Recipe
     template_name = "cookbook/recipe_confirm_delete.html"
     success_url = reverse_lazy("cookbook:recipe-list")
@@ -194,7 +189,7 @@ class RecipeDeleteView(
     def delete(self, request, *args, **kwargs):
         messages.success(
             request,
-            "Recipt deleted successfully!")
+            "Recipe deleted successfully!")
         return super().delete(
             request,
             *args,
@@ -202,12 +197,10 @@ class RecipeDeleteView(
         )
 
 
-@login_required
-def add_comment(request, pk):
-    """Add comment to recipe"""
-    recipe = get_object_or_404(Recipe, pk=pk)
-
-    if request.method == "POST":
+class CommentCreateView(LoginRequiredMixin, View):
+    """Add comment to a recipe"""
+    def post(self, request, pk):
+        recipe = get_object_or_404(Recipe, pk=pk)
         form = CommentForm(request.POST)
         if form.is_valid():
             comment = form.save(commit=False)
@@ -219,28 +212,24 @@ def add_comment(request, pk):
                 "Your comment has been added successfully!"
             )
         else:
-            messages.error(
-                request,
-                "Error adding comment. Please check your data and try again."
-            )
-
-    return redirect("cookbook:recipe-detail", pk=pk)
+            messages.error(request, "Error adding comment.")
+        return redirect("cookbook:recipe-detail", pk=pk)
 
 
-@login_required
-def toggle_favorite(request, pk):
-    """Add or remove recipe from favorites"""
-    recipe = get_object_or_404(Recipe, pk=pk)
-    user = request.user
-
-    if user.favorite_recipes.filter(pk=recipe.pk).exists():
-        user.favorite_recipes.remove(recipe)
-        messages.info(request, "Removed from favorites.")
-    else:
-        user.favorite_recipes.add(recipe)
-        messages.success(request, "Added to favorites!")
-
-    return HttpResponseRedirect(request.META.get("HTTP_REFERER", "/"))
+class FavoriteToggleView(LoginRequiredMixin, View):
+    """Add or remove a recipe from favorites"""
+    def post(self, request, pk):
+        recipe = get_object_or_404(Recipe, pk=pk)
+        user = request.user
+        if user.favorite_recipes.filter(pk=recipe.pk).exists():
+            user.favorite_recipes.remove(recipe)
+            messages.info(request, "Removed from favorites.")
+        else:
+            user.favorite_recipes.add(recipe)
+            messages.success(request, "Added to favorites!")
+        return HttpResponseRedirect(
+            request.META.get("HTTP_REFERER", "/")
+        )
 
 
 class CategoryListView(generic.ListView):
