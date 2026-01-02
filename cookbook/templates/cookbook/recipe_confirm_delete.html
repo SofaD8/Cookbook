@@ -1,6 +1,6 @@
 {% extends 'cookbook/base.html' %}
 
-{% block title %}Видалити рецепт - CookBook{% endblock %}
+{% block title %}Delete recipe - CookBook{% endblock %}
 
 {% block content %}
 <div class="container py-5">
@@ -8,17 +8,17 @@
         <div class="col-md-6">
             <div class="card shadow-lg border-danger">
                 <div class="card-header bg-danger text-white text-center">
-                    <h3><i class="fas fa-exclamation-triangle"></i> Підтвердження видалення</h3>
+                    <h3><i class="fas fa-exclamation-triangle"></i> Confirm deletion</h3>
                 </div>
                 <div class="card-body p-4">
                     <p class="text-center mb-4">
-                        Ви впевнені, що хочете видалити рецепт 
+                        Are you sure you want to delete the recipe?
                         <strong>"{{ recipe.title }}"</strong>?
                     </p>
                     
                     <div class="alert alert-warning">
                         <i class="fas fa-info-circle"></i>
-                        <strong>Увага!</strong> Ця дія незворотна. Всі коментарі та оцінки також будуть видалені.
+                        <strong>WARNING!</strong> This action is irreversible. All comments and ratings will also be deleted.
                     </div>
                     
                     <form method="post" class="mt-4">
@@ -26,10 +26,10 @@
                         <div class="d-flex gap-2 justify-content-center">
                             <a href="{% url 'cookbook:recipe-detail' recipe.pk %}" 
                                class="btn btn-secondary btn-lg">
-                                <i class="fas fa-times"></i> Скасувати
+                                <i class="fas fa-times"></i> Cancel
                             </a>
                             <button type="submit" class="btn btn-danger btn-lg">
-                                <i class="fas fa-trash"></i> Так, видалити
+                                <i class="fas fa-trash"></i> Yes, delete
                             </button>
                         </div>
                     </form>

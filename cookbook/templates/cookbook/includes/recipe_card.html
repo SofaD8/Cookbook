@@ -42,14 +42,14 @@
     <div class="card-footer bg-white border-top-0 pb-3">
         <div class="d-flex justify-content-between align-items-center mb-3">
             <small class="text-muted">
-                <i class="far fa-clock me-1"></i> {{ recipe.cooking_time }} хв
+                <i class="far fa-clock me-1"></i> {{ recipe.cooking_time }} min
             </small>
             <small class="text-muted">
-                <i class="fas fa-utensils me-1"></i> {{ recipe.servings }} порц.
+                <i class="fas fa-utensils me-1"></i> {{ recipe.servings }} portion
             </small>
         </div>
         <a href="{% url 'cookbook:recipe-detail' recipe.pk %}" class="btn btn-primary btn-sm w-100">
-            Переглянути рецепт
+            View recipe
         </a>
     </div>
 </div>

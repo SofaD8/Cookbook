@@ -28,14 +28,14 @@
                     {% endif %}
                     <small class="text-muted">
                         <i class="fas fa-calendar"></i> 
-                        Приєднався {{ profile_user.date_joined|date:"F Y" }}
+                        Joined {{ profile_user.date_joined|date:"F Y" }}
                     </small>
                 </div>
                 <div class="col-md-3 text-end">
                     {% if user == profile_user %}
                         <a href="{% url 'accounts:profile-update' %}"
                            class="btn btn-primary">
-                            <i class="fas fa-edit"></i> Редагувати профіль
+                            <i class="fas fa-edit"></i> Edit profile
                         </a>
                     {% endif %}
                 </div>
@@ -50,7 +50,7 @@
                 <div class="card-body">
                     <i class="fas fa-book fa-3x text-primary mb-2"></i>
                     <h3 class="fw-bold">{{ total_recipes }}</h3>
-                    <p class="text-muted mb-0">Рецептів</p>
+                    <p class="text-muted mb-0">Recipes</p>
                 </div>
             </div>
         </div>
@@ -59,7 +59,7 @@
                 <div class="card-body">
                     <i class="fas fa-heart fa-3x text-danger mb-2"></i>
                     <h3 class="fw-bold">{{ favorite_recipes.count }}</h3>
-                    <p class="text-muted mb-0">Улюблених</p>
+                    <p class="text-muted mb-0">Favorites</p>
                 </div>
             </div>
         </div>
@@ -68,7 +68,7 @@
                 <div class="card-body">
                     <i class="fas fa-comments fa-3x text-success mb-2"></i>
                     <h3 class="fw-bold">{{ total_comments }}</h3>
-                    <p class="text-muted mb-0">Коментарів</p>
+                    <p class="text-muted mb-0">Comments</p>
                 </div>
             </div>
         </div>
@@ -76,7 +76,7 @@
     
     <!-- User's Recipes -->
     <h3 class="fw-bold mb-3">
-        <i class="fas fa-book-open"></i> Рецепти користувача
+        <i class="fas fa-book-open"></i> User recipes
     </h3>
     {% if user_recipes %}
         <div class="row">
@@ -90,9 +90,9 @@
         <div class="alert alert-info">
             <i class="fas fa-info-circle"></i> 
             {% if user == profile_user %}
-                Ви ще не створили жодного рецепту
+                You have not created any recipes yet.
             {% else %}
-                Користувач ще не створив жодного рецепту
+                The user has not created any recipes yet.
             {% endif %}
         </div>
     {% endif %}

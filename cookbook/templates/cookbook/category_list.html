@@ -1,14 +1,14 @@
 {% extends 'cookbook/base.html' %}
 
-{% block title %}Категорії - CookBook{% endblock %}
+{% block title %}Categories - CookBook{% endblock %}
 
 {% block content %}
 <div class="page-header">
     <div class="container">
         <h1 class="display-4 fw-bold">
-            <i class="fas fa-list"></i> Категорії рецептів
+            <i class="fas fa-list"></i> Recipe categories
         </h1>
-        <p class="lead">Знайдіть рецепти за категоріями</p>
+        <p class="lead">Find recipes by category</p>
     </div>
 </div>
 
@@ -26,12 +26,12 @@
                         <p class="text-muted">{{ category.description|truncatewords:15 }}</p>
                         <p class="mb-3">
                             <span class="badge bg-primary">
-                                {{ category.recipe_count }} рецептів
+                                {{ category.recipe_count }} recipes
                             </span>
                         </p>
                         <a href="{% url 'cookbook:category-detail' category.pk %}" 
                            class="btn btn-outline-primary">
-                            Переглянути <i class="fas fa-arrow-right"></i>
+                            Review <i class="fas fa-arrow-right"></i>
                         </a>
                     </div>
                 </div>
@@ -39,7 +39,7 @@
         {% empty %}
             <div class="col-12">
                 <div class="alert alert-info text-center">
-                    <i class="fas fa-info-circle"></i> Категорії поки не додані
+                    <i class="fas fa-info-circle"></i> Categories not yet added
                 </div>
             </div>
         {% endfor %}

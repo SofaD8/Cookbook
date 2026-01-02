@@ -1,7 +1,7 @@
 {% extends 'cookbook/base.html' %}
 
 {% block title %}
-    {% if form.instance.pk %}Редагувати рецепт{% else %}Додати рецепт{% endif %} - CookBook
+    {% if form.instance.pk %}Edit recipe{% else %}Add a recipe{% endif %} - CookBook
 {% endblock %}
 
 {% block content %}
@@ -9,9 +9,9 @@
     <div class="container">
         <h1 class="display-4 fw-bold">
             <i class="fas {% if form.instance.pk %}fa-edit{% else %}fa-plus-circle{% endif %}"></i>
-            {% if form.instance.pk %}Редагувати рецепт{% else %}Додати новий рецепт{% endif %}
+            {% if form.instance.pk %}Edit recipe{% else %}Add a new recipe{% endif %}
         </h1>
-        <p class="lead">Поділіться своїм кулінарним шедевром з іншими</p>
+        <p class="lead">Share your culinary masterpiece with others</p>
     </div>
 </div>
 
@@ -61,7 +61,7 @@
                                     {% endif %}
                                     {% if form.instance.image %}
                                         <div class="mt-2">
-                                            <p class="small text-muted mb-1">Поточне зображення:</p>
+                                            <p class="small text-muted mb-1">Current image:</p>
                                             <img src="{{ form.instance.image.url }}" class="img-thumbnail" style="max-height: 100px;">
                                         </div>
                                     {% endif %}
@@ -75,7 +75,7 @@
                             <!-- Details -->
                             <div class="col-md-6">
                                 <div class="mb-4">
-                                    <label class="form-label fw-bold">{{ form.cooking_time.label }} (хв)</label>
+                                    <label class="form-label fw-bold">{{ form.cooking_time.label }} (min)</label>
                                     {{ form.cooking_time }}
                                     {% if form.cooking_time.errors %}
                                         <div class="text-danger small">{{ form.cooking_time.errors }}</div>
@@ -96,7 +96,7 @@
                         <div class="mb-4">
                             <label class="form-label fw-bold">{{ form.ingredients.label }}</label>
                             {{ form.ingredients }}
-                            <div class="form-text">Вводьте кожен інгредієнт з нового рядка</div>
+                            <div class="form-text">Enter each ingredient on a new line.</div>
                             {% if form.ingredients.errors %}
                                 <div class="text-danger small">{{ form.ingredients.errors }}</div>
                             {% endif %}
@@ -105,7 +105,7 @@
                         <div class="mb-4">
                             <label class="form-label fw-bold">{{ form.instructions.label }}</label>
                             {{ form.instructions }}
-                            <div class="form-text">Опишіть кроки приготування</div>
+                            <div class="form-text">Describe the steps of cooking</div>
                             {% if form.instructions.errors %}
                                 <div class="text-danger small">{{ form.instructions.errors }}</div>
                             {% endif %}
@@ -123,10 +123,10 @@
 
                         <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
                             <a href="{% if form.instance.pk %}{% url 'cookbook:recipe-detail' form.instance.pk %}{% else %}{% url 'cookbook:recipe-list' %}{% endif %}" class="btn btn-outline-secondary px-4">
-                                Скасувати
+                                Cancel
                             </a>
                             <button type="submit" class="btn btn-primary px-5">
-                                <i class="fas fa-save me-2"></i> {% if form.instance.pk %}Зберегти зміни{% else %}Опублікувати рецепт{% endif %}
+                                <i class="fas fa-save me-2"></i> {% if form.instance.pk %}Save changes{% else %}Publish recipe{% endif %}
                             </button>
                         </div>
                     </form>

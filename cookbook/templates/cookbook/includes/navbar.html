@@ -11,17 +11,17 @@
             <ul class="navbar-nav me-auto">
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'cookbook:recipe-list' %}">
-                        <i class="fas fa-book-open"></i> Рецепти
+                        <i class="fas fa-book-open"></i> Recipes
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'cookbook:category-list' %}">
-                        <i class="fas fa-list"></i> Категорії
+                        <i class="fas fa-list"></i> Categories
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'cookbook:tag-list' %}">
-                        <i class="fas fa-tags"></i> Теги
+                        <i class="fas fa-tags"></i> Tags
                     </a>
                 </li>
             </ul>
@@ -30,7 +30,7 @@
                 {% if user.is_authenticated %}
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'cookbook:recipe-create' %}">
-                            <i class="fas fa-plus-circle"></i> Додати рецепт
+                            <i class="fas fa-plus-circle"></i> Add a recipe
                         </a>
                     </li>
                     <li class="nav-item dropdown">
@@ -40,12 +40,12 @@
                         <ul class="dropdown-menu">
                             <li>
                                 <a class="dropdown-item" href="{% url 'accounts:profile' %}">
-                                    <i class="fas fa-user"></i> Мій профіль
+                                    <i class="fas fa-user"></i> My profile
                                 </a>
                             </li>
                             <li>
                                 <a class="dropdown-item" href="{% url 'accounts:profile-update' %}">
-                                    <i class="fas fa-edit"></i> Редагувати профіль
+                                    <i class="fas fa-edit"></i> Edit profile
                                 </a>
                             </li>
                             <li><hr class="dropdown-divider"></li>
@@ -53,7 +53,7 @@
                                 <form method="post" action="{% url 'accounts:logout' %}">
                                     {% csrf_token %}
                                     <button type="submit" class="dropdown-item">
-                                        <i class="fas fa-sign-out-alt"></i> Вийти
+                                        <i class="fas fa-sign-out-alt"></i> Log out
                                     </button>
                                 </form>
                             </li>
@@ -62,12 +62,12 @@
                 {% else %}
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'accounts:login' %}">
-                            <i class="fas fa-sign-in-alt"></i> Увійти
+                            <i class="fas fa-sign-in-alt"></i> Log in
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'accounts:signup' %}">
-                            <i class="fas fa-user-plus"></i> Реєстрація
+                            <i class="fas fa-user-plus"></i> Registration
                         </a>
                     </li>
                 {% endif %}

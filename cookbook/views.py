@@ -28,8 +28,6 @@ from .forms import (
 )
 
 
-# ============= HOME & INDEX =============
-
 def index(request):
     """Homepage with featured recipes"""
     recent_recipes = Recipe.objects.select_related(
@@ -53,8 +51,6 @@ def index(request):
     )
 
 
-# ============= RECIPE VIEWS =============
-
 class RecipeListView(generic.ListView):
     """List all recipes with search and filter"""
     model = Recipe
@@ -67,7 +63,6 @@ class RecipeListView(generic.ListView):
             "author", "category"
         ).prefetch_related("tags").order_by("-created_at")
 
-        # Search by title or description
         query = self.request.GET.get("query")
         if query:
             queryset = queryset.filter(
@@ -76,17 +71,14 @@ class RecipeListView(generic.ListView):
                 Q(ingredients__icontains=query)
             )
 
-        # Filter by category
         category_id = self.request.GET.get("category")
         if category_id:
             queryset = queryset.filter(category_id=category_id)
 
-        # Filter by tag
         tag_id = self.request.GET.get("tag")
         if tag_id:
             queryset = queryset.filter(tags__id=tag_id)
 
-        # Sorting
         sort = self.request.GET.get("sort")
         if sort == "oldest":
             queryset = queryset.order_by("created_at")
@@ -127,26 +119,23 @@ class RecipeDetailView(generic.DetailView):
         context = super().get_context_data(**kwargs)
         recipe = self.get_object()
 
-        # Get comments for this recipe
         context["comments"] = (recipe.comments
                                .select_related("author")
                                .all()
                                )
 
-        # Comment form (only for authenticated users)
         if self.request.user.is_authenticated:
             context["comment_form"] = CommentForm()
             context["is_favorite"] = (
-                    recipe in self.request.user
-                    .favorite_recipes.all())
+                self.request.user.favorite_recipes
+                .filter(pk=recipe.pk).exists()
+            )
 
-        # Check if user is the author
         context["is_author"] = (
                 self.request.user.is_authenticated and
                 self.request.user == recipe.author
         )
 
-        # Related recipes (same category)
         context["related_recipes"] = Recipe.objects.filter(
             category=recipe.category
         ).exclude(pk=recipe.pk).select_related("author")[:3]
@@ -164,7 +153,7 @@ class RecipeCreateView(LoginRequiredMixin, generic.CreateView):
         form.instance.author = self.request.user
         messages.success(
             self.request,
-            "Рецепт успішно створено!"
+            "Recipt created successfully!"
         )
         return super().form_valid(form) # noqa
 
@@ -184,7 +173,7 @@ class RecipeUpdateView(
     def form_valid(self, form):
         messages.success(
             self.request,
-            "Рецепт оновлено!"
+            "Recipt updated successfully!"
         )
         return super().form_valid(form) # noqa
 
@@ -205,15 +194,13 @@ class RecipeDeleteView(
     def delete(self, request, *args, **kwargs):
         messages.success(
             request,
-            "Рецепт видалено!")
+            "Recipt deleted successfully!")
         return super().delete(
             request,
             *args,
             **kwargs
         )
 
-
-# ============= COMMENT VIEWS =============
 
 @login_required
 def add_comment(request, pk):
@@ -229,19 +216,16 @@ def add_comment(request, pk):
             comment.save()
             messages.success(
                 request,
-                "Ви додали коментар!"
+                "Your comment has been added successfully!"
             )
         else:
             messages.error(
                 request,
-                "Помилка додавання коментаря."
-                "Будь ласка, перевірте введені дані."
+                "Error adding comment. Please check your data and try again."
             )
 
     return redirect("cookbook:recipe-detail", pk=pk)
 
-
-# ============= FAVORITE FUNCTIONALITY =============
 
 @login_required
 def toggle_favorite(request, pk):
@@ -249,17 +233,15 @@ def toggle_favorite(request, pk):
     recipe = get_object_or_404(Recipe, pk=pk)
     user = request.user
 
-    if recipe in user.favorite_recipes.all():
+    if user.favorite_recipes.filter(pk=recipe.pk).exists():
         user.favorite_recipes.remove(recipe)
-        messages.info(request, "Видалено з улюблених.")
+        messages.info(request, "Removed from favorites.")
     else:
         user.favorite_recipes.add(recipe)
-        messages.success(request, "Додано в улюблені!")
+        messages.success(request, "Added to favorites!")
 
     return HttpResponseRedirect(request.META.get("HTTP_REFERER", "/"))
 
-
-# ============= CATEGORY VIEWS =============
 
 class CategoryListView(generic.ListView):
     """List all categories"""
@@ -288,8 +270,6 @@ class CategoryDetailView(generic.DetailView):
         return context
 
 
-# ============= TAG VIEWS =============
-
 class TagListView(generic.ListView):
     """List all tags"""
     model = Tag
@@ -317,8 +297,6 @@ class TagDetailView(generic.DetailView):
                               )
         return context
 
-
-# ============= USER PROFILE VIEWS =============
 
 class UserDetailView(generic.DetailView):
     """User profile page"""

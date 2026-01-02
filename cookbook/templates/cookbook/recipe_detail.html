@@ -7,8 +7,8 @@
     <!-- Breadcrumb -->
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{% url 'cookbook:index' %}">Головна</a></li>
-            <li class="breadcrumb-item"><a href="{% url 'cookbook:recipe-list' %}">Рецепти</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'cookbook:index' %}">Home</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'cookbook:recipe-list' %}">Recipes</a></li>
             <li class="breadcrumb-item active">{{ recipe.title }}</li>
         </ol>
     </nav>
@@ -50,9 +50,9 @@
                                 {% csrf_token %}
                                 <button type="submit" class="btn {% if is_favorite %}btn-danger{% else %}btn-outline-danger{% endif %}">
                                     {% if is_favorite %}
-                                        <i class="fas fa-heart"></i> В улюблених
+                                        <i class="fas fa-heart"></i> In favorites
                                     {% else %}
-                                        <i class="far fa-heart"></i> До улюблених
+                                        <i class="far fa-heart"></i> Add to favorites
                                     {% endif %}
                                 </button>
                             </form>
@@ -87,7 +87,7 @@
                                 {% endfor %}
                             </span>
                             <span class="ms-2 fw-bold">{{ recipe.average_rating }}/5</span>
-                            <small class="text-muted">({{ recipe.comments.count }} відгуків)</small>
+                            <small class="text-muted">({{ recipe.comments.count }} reviews)</small>
                         </div>
                     {% endif %}
                     
@@ -95,31 +95,31 @@
                     <div class="row text-center bg-light rounded p-3 mb-3">
                         <div class="col-4">
                             <i class="fas fa-clock fa-2x text-primary mb-2"></i>
-                            <p class="mb-0 fw-bold">{{ recipe.cooking_time }} хв</p>
-                            <small class="text-muted">Час приготування</small>
+                            <p class="mb-0 fw-bold">{{ recipe.cooking_time }} min</p>
+                            <small class="text-muted">Cooking time</small>
                         </div>
                         <div class="col-4">
                             <i class="fas fa-users fa-2x text-success mb-2"></i>
                             <p class="mb-0 fw-bold">{{ recipe.servings }}</p>
-                            <small class="text-muted">Порцій</small>
+                            <small class="text-muted">Portions</small>
                         </div>
                         <div class="col-4">
                             <i class="fas fa-comments fa-2x text-info mb-2"></i>
                             <p class="mb-0 fw-bold">{{ recipe.comments.count }}</p>
-                            <small class="text-muted">Коментарів</small>
+                            <small class="text-muted">Comments</small>
                         </div>
                     </div>
                     
                     <!-- Description -->
                     <div class="mb-4">
-                        <h5 class="fw-bold"><i class="fas fa-info-circle"></i> Опис</h5>
+                        <h5 class="fw-bold"><i class="fas fa-info-circle"></i> Description</h5>
                         <p class="text-muted">{{ recipe.description }}</p>
                     </div>
                     
                     <!-- Tags -->
                     {% if recipe.tags.all %}
                         <div class="mb-3">
-                            <h6 class="fw-bold"><i class="fas fa-tags"></i> Теги:</h6>
+                            <h6 class="fw-bold"><i class="fas fa-tags"></i> Tags:</h6>
                             {% for tag in recipe.tags.all %}
                                 <a href="{% url 'cookbook:tag-detail' tag.pk %}" 
                                    class="badge bg-light text-dark border text-decoration-none me-1">
@@ -135,11 +135,11 @@
                         <div class="d-flex gap-2">
                             <a href="{% url 'cookbook:recipe-update' recipe.pk %}" 
                                class="btn btn-warning">
-                                <i class="fas fa-edit"></i> Редагувати
+                                <i class="fas fa-edit"></i> Edit
                             </a>
                             <a href="{% url 'cookbook:recipe-delete' recipe.pk %}" 
                                class="btn btn-danger">
-                                <i class="fas fa-trash"></i> Видалити
+                                <i class="fas fa-trash"></i> Remove
                             </a>
                         </div>
                     {% endif %}
@@ -149,7 +149,7 @@
             <!-- Ingredients -->
             <div class="card mb-4">
                 <div class="card-header bg-primary text-white">
-                    <h5 class="mb-0"><i class="fas fa-shopping-basket"></i> Інгредієнти</h5>
+                    <h5 class="mb-0"><i class="fas fa-shopping-basket"></i> Ingredients</h5>
                 </div>
                 <div class="card-body">
                     <pre style="white-space: pre-wrap; font-family: inherit;">{{ recipe.ingredients }}</pre>
@@ -159,7 +159,7 @@
             <!-- Instructions -->
             <div class="card mb-4">
                 <div class="card-header bg-success text-white">
-                    <h5 class="mb-0"><i class="fas fa-list-ol"></i> Інструкції</h5>
+                    <h5 class="mb-0"><i class="fas fa-list-ol"></i> Instructions</h5>
                 </div>
                 <div class="card-body">
                     <pre style="white-space: pre-wrap; font-family: inherit;">{{ recipe.instructions }}</pre>
@@ -170,7 +170,7 @@
             <div class="card">
                 <div class="card-header">
                     <h5 class="mb-0">
-                        <i class="fas fa-comments"></i> Коментарі ({{ comments.count }})
+                        <i class="fas fa-comments"></i> Comments ({{ comments.count }})
                     </h5>
                 </div>
                 <div class="card-body">
@@ -180,9 +180,9 @@
                     {% else %}
                         <div class="alert alert-info">
                             <i class="fas fa-info-circle"></i> 
-                            <a href="{% url 'accounts:login' %}">Увійдіть</a> або
-                            <a href="{% url 'accounts:signup' %}">зареєструйтесь</a>,
-                            щоб залишити коментар
+                            <a href="{% url 'accounts:login' %}">Log in</a> or
+                            <a href="{% url 'accounts:signup' %}">register</a>,
+                            to leave a comment
                         </div>
                     {% endif %}
                     
@@ -228,7 +228,7 @@
                         {% endfor %}
                     {% else %}
                         <p class="text-muted text-center">
-                            <i class="fas fa-comment-slash"></i> Коментарів поки немає. Будьте першим!
+                            <i class="fas fa-comment-slash"></i> No comments yet. Be the first!
                         </p>
                     {% endif %}
                 </div>
@@ -241,7 +241,7 @@
             {% if related_recipes %}
                 <div class="card mb-4">
                     <div class="card-header bg-info text-white">
-                        <h5 class="mb-0"><i class="fas fa-lightbulb"></i> Схожі рецепти</h5>
+                        <h5 class="mb-0"><i class="fas fa-lightbulb"></i> Similar recipes</h5>
                     </div>
                     <div class="list-group list-group-flush">
                         {% for related in related_recipes %}
@@ -250,7 +250,7 @@
                                 <div class="d-flex w-100 justify-content-between">
                                     <h6 class="mb-1">{{ related.title|truncatewords:4 }}</h6>
                                     <small class="text-muted">
-                                        <i class="fas fa-clock"></i> {{ related.cooking_time }} хв
+                                        <i class="fas fa-clock"></i> {{ related.cooking_time }} min
                                     </small>
                                 </div>
                                 <small class="text-muted">
@@ -265,13 +265,13 @@
             <!-- Share Card -->
             <div class="card">
                 <div class="card-header bg-secondary text-white">
-                    <h5 class="mb-0"><i class="fas fa-share-alt"></i> Поділитися</h5>
+                    <h5 class="mb-0"><i class="fas fa-share-alt"></i> Share</h5>
                 </div>
                 <div class="card-body text-center">
-                    <p class="text-muted">Сподобався рецепт? Поділіться з друзями!</p>
+                    <p class="text-muted">Liked the recipe? Share it with your friends!</p>
                     <div class="d-grid gap-2">
                         <button class="btn btn-primary" onclick="navigator.clipboard.writeText(window.location.href)">
-                            <i class="fas fa-link"></i> Копіювати посилання
+                            <i class="fas fa-link"></i> Copy link
                         </button>
                     </div>
                 </div>

@@ -17,7 +17,7 @@ class SignUpView(generic.CreateView):
     def form_valid(self, form):
         messages.success(
             self.request, 
-            "Обліковий запис успішно створено! "
+            "Account created successfully! "
             "Please log in."
         )
         return super().form_valid(form) # noqa
@@ -56,7 +56,7 @@ def profile_update(request):
             form.save()
             messages.success(
                 request, 
-                "Профіль успішно оновлено!"
+                "Profile updated successfully!"
             )
             return redirect("cookbook:user-detail", pk=request.user.pk)
     else:

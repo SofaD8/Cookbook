@@ -22,12 +22,12 @@ class RecipeForm(forms.ModelForm):
         widgets = {
             "title": forms.TextInput(attrs={
                 "class": "form-control",
-                "placeholder": "Введіть назву рецепта..."
+                "placeholder": "Enter the recipe name..."
             }),
             "description": forms.Textarea(attrs={
                 "class": "form-control",
                 "rows": 3,
-                "placeholder": "Короткий опис вашої страви..."
+                "placeholder": "A brief description of your dish..."
             }),
             "category": forms.Select(attrs={
                 "class": "form-select"
@@ -36,23 +36,23 @@ class RecipeForm(forms.ModelForm):
                 "class": "form-control",
                 "rows": 6,
                 "placeholder":
-                    "Список інгредієнтів (по одному на рядок):\n"
-                    "- 2 склянки борошна\n- 1 яйце\n- ..."
+                    "List of ingredients (one per line):\n"
+                    "- 2 cups flour\n- 1 egg\n- ..."
             }),
             "instructions": forms.Textarea(attrs={
                 "class": "form-control",
                 "rows": 8,
                 "placeholder":
-                    "1. Перший крок...\n2. Другий крок...\n..."
+                    "1. First step...\n2. Second step...\n..."
             }),
             "cooking_time": forms.NumberInput(attrs={
                 "class": "form-control",
-                "placeholder": "Хвилини",
+                "placeholder": "Minutes",
                 "min": 1
             }),
             "servings": forms.NumberInput(attrs={
                 "class": "form-control",
-                "placeholder": "Кількість порцій",
+                "placeholder": "Number of servings",
                 "min": 1
             }),
             "image": forms.FileInput(attrs={
@@ -62,9 +62,9 @@ class RecipeForm(forms.ModelForm):
             "tags": forms.CheckboxSelectMultiple(),
         }
         help_texts = {
-            "cooking_time": "Загальний час приготування в хвилинах",
-            "servings": "На скільки порцій?",
-            "tags": "Виберіть усе, що підходить",
+            "cooking_time": "Total cooking time in minutes",
+            "servings": "How many servings?",
+            "tags": "Choose whatever fits.",
         }
 
     def __init__(self, *args, **kwargs):
@@ -83,14 +83,14 @@ class CommentForm(forms.ModelForm):
             "content": forms.Textarea(attrs={
                 "class": "form-control",
                 "rows": 4,
-                "placeholder": "Поділіться своєю думкою про рецепт..."
+                "placeholder": "Share your thoughts about this recipe..."
             }),
                 "rating": forms.RadioSelect(
                 choices=[(i, i) for i in range(1, 6)]),
         }
         labels = {
-            "content": "Ваш коментар",
-            "rating": "Оцініть цей рецепт (optional)",
+            "content": "Your comment:",
+            "rating": "Rate this recipe (optional):",
         }
 
 
@@ -101,14 +101,14 @@ class RecipeSearchForm(forms.Form):
         required=False,
         widget=forms.TextInput(attrs={
             "class": "form-control",
-            "placeholder": "Пошук рецептів...",
+            "placeholder": "Search recipes...",
             "aria-label": "Search"
         })
     )
     category = forms.ModelChoiceField(
         queryset=None,  # Will be set in __init__
         required=False,
-        empty_label="Всі категорії",
+        empty_label="All categories",
         widget=forms.Select(attrs={"class": "form-select"})
     )
 

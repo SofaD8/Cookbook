@@ -1,14 +1,14 @@
 {% extends 'cookbook/base.html' %}
 
-{% block title %}Теги - CookBook{% endblock %}
+{% block title %}Tags - CookBook{% endblock %}
 
 {% block content %}
 <div class="page-header">
     <div class="container">
         <h1 class="display-4 fw-bold">
-            <i class="fas fa-tags"></i> Теги рецептів
+            <i class="fas fa-tags"></i> Recipe tags
         </h1>
-        <p class="lead">Фільтруйте рецепти за тегами</p>
+        <p class="lead">Filter recipes by tags</p>
     </div>
 </div>
 
@@ -25,7 +25,7 @@
         </div>
     {% else %}
         <div class="alert alert-info text-center">
-            <i class="fas fa-info-circle"></i> Теги поки не додані
+            <i class="fas fa-info-circle"></i> Tags not yet added
         </div>
     {% endif %}
 </div>

@@ -1,6 +1,6 @@
 {% extends 'cookbook/base.html' %}
 
-{% block title %}Реєстрація - CookBook{% endblock %}
+{% block title %}Registration - CookBook{% endblock %}
 
 {% block content %}
 <div class="container py-5">
@@ -15,8 +15,8 @@
                              style="width: 80px; height: 80px;">
                             <i class="fas fa-user-plus fa-3x text-white"></i>
                         </div>
-                        <h2 class="mt-3 fw-bold">Приєднуйтеся до нас!</h2>
-                        <p class="text-muted">Створіть акаунт і почніть ділитися рецептами</p>
+                        <h2 class="mt-3 fw-bold">Join us!</h2>
+                        <p class="text-muted">Create an account and start sharing recipes</p>
                     </div>
                     
                     <!-- Registration Form -->
@@ -26,7 +26,7 @@
                         <!-- Username -->
                         <div class="mb-3">
                             <label for="{{ form.username.id_for_label }}" class="form-label fw-bold">
-                                <i class="fas fa-user"></i> Ім'я користувача *
+                                <i class="fas fa-user"></i> User name *
                             </label>
                             {{ form.username }}
                             {% if form.username.errors %}
@@ -35,7 +35,7 @@
                                 </div>
                             {% else %}
                                 <small class="form-text text-muted">
-                                    Обов'язкове поле. 150 символів або менше. Тільки літери, цифри та @/./+/-/_
+                                    Required field. 150 characters or less. Only letters, numbers, and @/./+/-/_
                                 </small>
                             {% endif %}
                         </div>
@@ -52,7 +52,7 @@
                                 </div>
                             {% else %}
                                 <small class="form-text text-muted">
-                                    Введіть дійсну адресу електронної пошти
+                                    Please enter a valid email address.
                                 </small>
                             {% endif %}
                         </div>
@@ -61,7 +61,7 @@
                         <div class="row">
                             <div class="col-md-6 mb-3">
                                 <label for="{{ form.first_name.id_for_label }}" class="form-label fw-bold">
-                                    <i class="fas fa-id-card"></i> Ім'я
+                                    <i class="fas fa-id-card"></i> First name
                                 </label>
                                 {{ form.first_name }}
                                 {% if form.first_name.errors %}
@@ -73,7 +73,7 @@
                             
                             <div class="col-md-6 mb-3">
                                 <label for="{{ form.last_name.id_for_label }}" class="form-label fw-bold">
-                                    <i class="fas fa-id-card"></i> Прізвище
+                                    <i class="fas fa-id-card"></i> Last name
                                 </label>
                                 {{ form.last_name }}
                                 {% if form.last_name.errors %}
@@ -87,7 +87,7 @@
                         <!-- Password 1 -->
                         <div class="mb-3">
                             <label for="{{ form.password1.id_for_label }}" class="form-label fw-bold">
-                                <i class="fas fa-lock"></i> Пароль *
+                                <i class="fas fa-lock"></i> Password *
                             </label>
                             {{ form.password1 }}
                             {% if form.password1.errors %}
@@ -97,10 +97,10 @@
                             {% else %}
                                 <small class="form-text text-muted">
                                     <ul class="mb-0 ps-3">
-                                        <li>Ваш пароль не може бути занадто схожим на вашу іншу особисту інформацію</li>
-                                        <li>Ваш пароль повинен містити принаймні 8 символів</li>
-                                        <li>Ваш пароль не може бути загальновживаним</li>
-                                        <li>Ваш пароль не може складатися лише з цифр</li>
+                                        <li>Your password cannot be too similar to your other personal information.</li>
+                                        <li>Your password must be at least 8 characters long</li>
+                                        <li>Your password cannot be common.</li>
+                                        <li>Your password cannot consist only of numbers.</li>
                                     </ul>
                                 </small>
                             {% endif %}
@@ -109,7 +109,7 @@
                         <!-- Password 2 -->
                         <div class="mb-4">
                             <label for="{{ form.password2.id_for_label }}" class="form-label fw-bold">
-                                <i class="fas fa-lock"></i> Підтвердження паролю *
+                                <i class="fas fa-lock"></i> Password confirmation *
                             </label>
                             {{ form.password2 }}
                             {% if form.password2.errors %}
@@ -118,7 +118,7 @@
                                 </div>
                             {% else %}
                                 <small class="form-text text-muted">
-                                    Введіть той самий пароль для підтвердження
+                                    Enter the same password to confirm.
                                 </small>
                             {% endif %}
                         </div>
@@ -137,16 +137,16 @@
                                    id="agreeTerms" 
                                    required>
                             <label class="form-check-label" for="agreeTerms">
-                                Я погоджуюся з 
-                                <a href="#" class="text-decoration-none">умовами використання</a> 
-                                та 
-                                <a href="#" class="text-decoration-none">політикою конфіденційності</a>
+                                I agree with
+                                <a href="#" class="text-decoration-none">terms of use</a>
+                                and
+                                <a href="#" class="text-decoration-none">privacy policy</a>
                             </label>
                         </div>
                         
                         <!-- Submit Button -->
                         <button type="submit" class="btn btn-success btn-lg w-100 mb-3">
-                            <i class="fas fa-user-plus"></i> Зареєструватися
+                            <i class="fas fa-user-plus"></i> Register
                         </button>
                     </form>
                     
@@ -155,9 +155,9 @@
                     <!-- Login Link -->
                     <div class="text-center">
                         <p class="text-muted mb-0">
-                            Вже маєте акаунт?
+                            Already have an account?
                             <a href="{% url 'accounts:login' %}" class="text-decoration-none fw-bold">
-                                Увійти <i class="fas fa-arrow-right"></i>
+                                Log in <i class="fas fa-arrow-right"></i>
                             </a>
                         </p>
                     </div>
@@ -168,24 +168,24 @@
             <div class="card mt-4 bg-light border-0">
                 <div class="card-body">
                     <h6 class="fw-bold text-success text-center mb-3">
-                        <i class="fas fa-gift"></i> Що ви отримаєте після реєстрації?
+                        <i class="fas fa-gift"></i> What will you get after registration?
                     </h6>
                     <div class="row text-center">
                         <div class="col-md-3 col-6 mb-3">
                             <i class="fas fa-plus-circle fa-2x text-primary mb-2"></i>
-                            <p class="small mb-0 fw-bold">Створюйте рецепти</p>
+                            <p class="small mb-0 fw-bold">Create recipes</p>
                         </div>
                         <div class="col-md-3 col-6 mb-3">
                             <i class="fas fa-heart fa-2x text-danger mb-2"></i>
-                            <p class="small mb-0 fw-bold">Улюблені рецепти</p>
+                            <p class="small mb-0 fw-bold">Favorite recipes</p>
                         </div>
                         <div class="col-md-3 col-6 mb-3">
                             <i class="fas fa-comment fa-2x text-success mb-2"></i>
-                            <p class="small mb-0 fw-bold">Коментуйте</p>
+                            <p class="small mb-0 fw-bold">Comment</p>
                         </div>
                         <div class="col-md-3 col-6 mb-3">
                             <i class="fas fa-star fa-2x text-warning mb-2"></i>
-                            <p class="small mb-0 fw-bold">Оцінюйте</p>
+                            <p class="small mb-0 fw-bold">Rate</p>
                         </div>
                     </div>
                 </div>
