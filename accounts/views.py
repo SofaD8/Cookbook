@@ -1,5 +1,4 @@
-from django.shortcuts import render, redirect
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 from django.views import generic
 from django.urls import reverse_lazy
@@ -16,54 +15,45 @@ class SignUpView(generic.CreateView):
 
     def form_valid(self, form):
         messages.success(
-            self.request, 
+            self.request,
             "Account created successfully! "
             "Please log in."
         )
         return super().form_valid(form) # noqa
 
 
-@login_required
-def profile_view(request):
-    """Current user"s profile view"""
-    user_recipes = Recipe.objects.filter(author=request.user)
-    favorite_recipes = request.user.favorite_recipes.all()
+class ProfileView(LoginRequiredMixin, generic.TemplateView):
+    """Current user's profile view"""
+    template_name = "registration/profile.html"
 
-    context = {
-        "profile_user": request.user,
-        "user_recipes": user_recipes,
-        "favorite_recipes": favorite_recipes,
-        "total_recipes": user_recipes.count(),
-        "total_comments": request.user.comments.count(),
-    }
-    return render(
-        request, 
-        "registration/profile.html", 
-        context
-    )
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        user = self.request.user
+        user_recipes = Recipe.objects.filter(author=user)
+
+        context.update({
+            "profile_user": user,
+            "user_recipes": user_recipes,
+            "favorite_recipes": user.favorite_recipes.all(),
+            "total_recipes": user_recipes.count(),
+            "total_comments": user.comments.count(),
+        })
+        return context
 
 
-@login_required
-def profile_update(request):
+class ProfileUpdateView(LoginRequiredMixin, generic.UpdateView):
     """Update user profile view"""
-    if request.method == "POST":
-        form = UserUpdateForm(
-            request.POST, 
-            request.FILES, 
-            instance=request.user
-        )
-        if form.is_valid():
-            form.save()
-            messages.success(
-                request, 
-                "Profile updated successfully!"
-            )
-            return redirect("cookbook:user-detail", pk=request.user.pk)
-    else:
-        form = UserUpdateForm(instance=request.user)
+    model = None
+    form_class = UserUpdateForm
+    template_name = "cookbook/profile_update.html"
 
-    return render(
-        request, 
-        "cookbook/profile_update.html", 
-        {"form": form}
-    )
+    def get_object(self, queryset=None):
+        return self.request.user
+
+    def get_success_url(self):
+        messages.success(
+            self.request,
+            "Profile updated successfully!")
+        return reverse_lazy(
+            "cookbook:user-detail",
+            kwargs={"pk": self.request.user.pk})

@@ -86,7 +86,8 @@ class CommentForm(forms.ModelForm):
                 "placeholder": "Share your thoughts about this recipe..."
             }),
                 "rating": forms.RadioSelect(
-                choices=[(i, i) for i in range(1, 6)]),
+                choices=[(i, i) for i in range(1, 6)]
+                ),
         }
         labels = {
             "content": "Your comment:",
@@ -106,7 +107,7 @@ class RecipeSearchForm(forms.Form):
         })
     )
     category = forms.ModelChoiceField(
-        queryset=None,  # Will be set in __init__
+        queryset=None,
         required=False,
         empty_label="All categories",
         widget=forms.Select(attrs={"class": "form-select"})
