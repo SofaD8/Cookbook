@@ -32,14 +32,14 @@ class SignUpForm(UserCreationForm):
         })
     )
 
-    class Meta:
+    class Meta(UserCreationForm.Meta):
         model = User
-        fields = [
+        fields = UserCreationForm.Meta.fields + (
             "username",
             "email",
             "first_name",
             "last_name"
-        ]
+        )
         widgets = {
             "username": forms.TextInput(attrs={
                 "class": "form-control",

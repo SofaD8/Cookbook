@@ -3,7 +3,7 @@ from django.contrib import messages
 from django.views import generic
 from django.urls import reverse_lazy
 
-from cookbook.models import Recipe
+from cookbook.models import Recipe, User
 from .forms import SignUpForm, UserUpdateForm
 
 
@@ -43,7 +43,7 @@ class ProfileView(LoginRequiredMixin, generic.TemplateView):
 
 class ProfileUpdateView(LoginRequiredMixin, generic.UpdateView):
     """Update user profile view"""
-    model = None
+    model = User
     form_class = UserUpdateForm
     template_name = "cookbook/profile_update.html"
 
