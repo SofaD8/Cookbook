@@ -1,0 +1,31 @@
+{% extends 'cookbook/base.html' %}
+
+{% block title %}#{{ tag.name }} - CookBook{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <div class="container">
+        <h1 class="display-4 fw-bold">
+            <i class="fas fa-tag"></i> #{{ tag.name }}
+        </h1>
+        <p class="lead">Recipes with tag "{{ tag.name }}"</p>
+    </div>
+</div>
+
+<div class="container py-4">
+    {% if recipes %}
+        <div class="row">
+            {% for recipe in recipes %}
+                <div class="col-md-4 col-sm-6 mb-4">
+                    {% include 'cookbook/includes/recipe_card.html' with recipe=recipe %}
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="text-center py-5">
+            <i class="fas fa-inbox fa-4x text-muted mb-3"></i>
+            <h3>There are no recipes with this tag yet.</h3>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

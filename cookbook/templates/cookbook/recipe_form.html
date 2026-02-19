@@ -1,0 +1,138 @@
+{% extends 'cookbook/base.html' %}
+
+{% block title %}
+    {% if form.instance.pk %}Edit recipe{% else %}Add a recipe{% endif %} - CookBook
+{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <div class="container">
+        <h1 class="display-4 fw-bold">
+            <i class="fas {% if form.instance.pk %}fa-edit{% else %}fa-plus-circle{% endif %}"></i>
+            {% if form.instance.pk %}Edit recipe{% else %}Add a new recipe{% endif %}
+        </h1>
+        <p class="lead">Share your culinary masterpiece with others</p>
+    </div>
+</div>
+
+<div class="container py-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <div class="card shadow-sm border-0">
+                <div class="card-body p-4">
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        
+                        <div class="row">
+                            <!-- Basic Info -->
+                            <div class="col-md-8">
+                                <div class="mb-4">
+                                    <label class="form-label fw-bold">{{ form.title.label }}</label>
+                                    {{ form.title }}
+                                    {% if form.title.errors %}
+                                        <div class="text-danger small">{{ form.title.errors }}</div>
+                                    {% endif %}
+                                </div>
+                                
+                                <div class="mb-4">
+                                    <label class="form-label fw-bold">{{ form.description.label }}</label>
+                                    {{ form.description }}
+                                    {% if form.description.errors %}
+                                        <div class="text-danger small">{{ form.description.errors }}</div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            
+                            <!-- Category and Image -->
+                            <div class="col-md-4">
+                                <div class="mb-4">
+                                    <label class="form-label fw-bold">{{ form.category.label }}</label>
+                                    {{ form.category }}
+                                    {% if form.category.errors %}
+                                        <div class="text-danger small">{{ form.category.errors }}</div>
+                                    {% endif %}
+                                </div>
+                                
+                                <div class="mb-4">
+                                    <label class="form-label fw-bold">{{ form.image.label }}</label>
+                                    {{ form.image }}
+                                    {% if form.image.errors %}
+                                        <div class="text-danger small">{{ form.image.errors }}</div>
+                                    {% endif %}
+                                    {% if form.instance.image %}
+                                        <div class="mt-2">
+                                            <p class="small text-muted mb-1">Current image:</p>
+                                            <img src="{{ form.instance.image.url }}" class="img-thumbnail" style="max-height: 100px;">
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+
+                        <hr class="my-4">
+
+                        <div class="row">
+                            <!-- Details -->
+                            <div class="col-md-6">
+                                <div class="mb-4">
+                                    <label class="form-label fw-bold">{{ form.cooking_time.label }} (min)</label>
+                                    {{ form.cooking_time }}
+                                    {% if form.cooking_time.errors %}
+                                        <div class="text-danger small">{{ form.cooking_time.errors }}</div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-4">
+                                    <label class="form-label fw-bold">{{ form.servings.label }}</label>
+                                    {{ form.servings }}
+                                    {% if form.servings.errors %}
+                                        <div class="text-danger small">{{ form.servings.errors }}</div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label fw-bold">{{ form.ingredients.label }}</label>
+                            {{ form.ingredients }}
+                            <div class="form-text">Enter each ingredient on a new line.</div>
+                            {% if form.ingredients.errors %}
+                                <div class="text-danger small">{{ form.ingredients.errors }}</div>
+                            {% endif %}
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label fw-bold">{{ form.instructions.label }}</label>
+                            {{ form.instructions }}
+                            <div class="form-text">Describe the steps of cooking</div>
+                            {% if form.instructions.errors %}
+                                <div class="text-danger small">{{ form.instructions.errors }}</div>
+                            {% endif %}
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label fw-bold">{{ form.tags.label }}</label>
+                            <div class="d-flex flex-wrap gap-3 p-3 bg-light rounded">
+                                {{ form.tags }}
+                            </div>
+                            {% if form.tags.errors %}
+                                <div class="text-danger small">{{ form.tags.errors }}</div>
+                            {% endif %}
+                        </div>
+
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
+                            <a href="{% if form.instance.pk %}{% url 'cookbook:recipe-detail' form.instance.pk %}{% else %}{% url 'cookbook:recipe-list' %}{% endif %}" class="btn btn-outline-secondary px-4">
+                                Cancel
+                            </a>
+                            <button type="submit" class="btn btn-primary px-5">
+                                <i class="fas fa-save me-2"></i> {% if form.instance.pk %}Save changes{% else %}Publish recipe{% endif %}
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
